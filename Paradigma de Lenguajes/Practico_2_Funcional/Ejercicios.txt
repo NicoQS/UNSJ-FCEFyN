@@ -1,0 +1,119 @@
+--Ejercicio 5 Definir una función que cuente los elementos pares tiene una lista de números.
+
+cuentepares::[Int] -> Int
+cuentepares a = (length(filter(even) a))
+
+--Ejercicio 6 Definir una función que reciba una lista de listas y entregue la cantidad de elementos de la lista de mayor longitud.
+
+cantelemML:: [[a]] -> Int
+cantelemML lista = maximum[length x | x <- lista]
+
+--Ejercicio 7 Definir una función que transforme una lista de números en otra lista que contenga el cubo de cada elemento.
+
+listcubo::[Int]->[Int]
+listcubo lista = [x^3 | x<-lista]
+
+--Ejercicio Nº 8: Definir una función recursiva que permita eliminar los elementos repetidos de una lista de átomos.
+
+eliminarduplicado :: (Eq a) => [a] -> [a]
+eliminarduplicado [] = []
+eliminarduplicado (x:xs) = x : eliminarduplicado (filter (/= x) xs)
+
+--Ejercicio Nº 9: Implementar una función recursiva que pase un número decimal a binario
+
+decimal_binario :: (Int) -> [Int]
+decimal_binario 0 = [0]
+decimal_binario 1 = [1]
+decimal_binario n
+| mod n 2 == 1 = decimal_binario (div n 2) ++ [1]
+| mod n 2 == 0 = decimal_binario (div n 2) ++ [0]
+
+-- Ejercicio Nº 10: Implementar una función recursiva que permita obtener la unión de dos listas dadas; los elementos repetidos solo deben aparecer una vez.
+union :: (Eq a) => [a] -> [a] -> [a]
+union [] [] = []
+union list [] = list
+union [] list = list
+union list1 list2
+|(elem (head list1) list2) = union (tail list1) list2
+| otherwise = union (tail list1) (head list1 : list2)
+
+--Ejercicio Nº 11: Definir una función que permita contar los átomos de una lista de listas.
+
+contar :: [[a]] -> Int
+contar [] = 0
+contar (x:lista) = length(x) + contar(lista)
+
+-- Ejercicio Nº 12: Calcular el producto de una matriz por un vector.
+
+calc :: [[Int]] -> [Int] -> [[Int]]
+calc a b = map (\x -> zipWith (*) x b) a
+
+calc2 :: [[Int]] -> [Int] -> Int
+calc2 a b = sum [sum x | x <- calc a b]
+
+-- 14. Dada una lista ordenada y un átomo escribir una función que inserte el átomo en el lugar correspondiente.
+
+insertar:: (Integral a) => a -> [a] -> [a]
+insertar x [] = [x]
+insertar x (c:listac)
+| x<=c = x:c:listac
+| otherwise = c: insertar x listac
+
+-- 15. Defina una función que, aplicada a una lista de listas, permita obtener una lista de un solo nivel.
+
+concatena:: [[a]] -> [a]
+concatena [[]] = []
+concatena (x:xs) = x ++ concatena xs
+
+--16. Construir un programa no recursivo que realice la suma de números complejos, los cuales se ingresan en sublistas con pares de números donde el primer elemento es la componente real y el segundo la componente imaginaria.
+
+sumarIMG::(Integral a) => [[a]] -> [a]
+sumarIMG lista = [sum([head x | x <- lista]),sum([last x | x <- lista])]
+
+-- [[1,2],[2,3],[2,1]] = 1+2i+2+3i+2+1i = 5+6i = [5,6]
+
+-- 18. Escriba un programa que recibiendo como argumento una lista de listas donde cada sublista contiene nombre del docente, dedicación y carrera donde trabaja; entregue como resultado una lista con los nombres de los docentes que cobrarán un plus considerando que los cobrarán aquellos docentes que tenga solamente un cargo con dedicación simple.
+-- Ejemplo: plus ((Ana, Exclusivo, LSI), (Mary, Semi, LCC), (Jose, Simple, LSI), (Mary, Simple, LSI), (Raul, Exclusivo, LCC) (Pepe, Simple, LSI) ....) (Jose, Pepe, ....)
+-- [["Ana", "Exclusivo", "LSI"], ["Mary", "Semi", "LCC"], ["Jose", "Simple", "LSI"], ["Mary", "Simple", "LSI"], ["Raul", "Exclusivo", "LCC"], ["Pepe", "Simple", "LSI"]]
+plus:: [[[Char]]] -> [[Char]]
+plus lista = [(x!!0) | x <- lista, ((x!!1) == "Simple")]
+
+-- Parcial Ej 3
+
+buscar :: (Eq a) => a -> [[a]] -> a
+buscar x (y:ys)
+  | (x == (y !! 0)) = y !! 1
+  | otherwise = buscar x ys
+
+enlace :: (Eq a) => [[a]] -> [[a]] -> [[a]]
+enlace [] lote = []
+enlace (x:xs) lote = [x !! 0, buscar (x !! 1) lote] : enlace xs lote
+
+enlace2 :: (Eq a) => [[a]] -> [[a]] -> [[a]]
+enlace2 lista1 lote = [[x !! 0, (head [(y !! 1) | y <- lote, (y !! 0) == (x !! 1)])] | x <- lista1]
+
+main = do
+  let lista1 = [[1, 2], [5, 6], [20, 8]]
+  let lista2 = [[6, 100], [1, 200], [3, 300], [2, 400], [8, 500]]
+  let result = enlace2 lista1 lista2
+
+  print result
+
+
+
+import Data.List (partition)
+
+insertar::[Int] -> [Int] -> [Int]
+insertar [] lista = lista
+insertar (x:xs) lista = insertar (xs (arma x lista))
+
+arma:: Int -> [Int] -> [Int]
+arma c [] = [c]
+arma c (x:xs)
+ | c<=x = c:x:xs
+ |otherwise = x: arma c xs
+
+main :: IO ()
+main = do
+  let var = insertar [3,9,5] [4,5,8]
+  putStrLn $ show $ (var)

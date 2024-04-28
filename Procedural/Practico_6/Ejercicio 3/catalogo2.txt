@@ -1,0 +1,19 @@
+Ano: 2017
+Mes: 6
+Dia: 25
+Hora: 13
+Lat: 71.421412
+Long: 63.525155
+Prof: 3000
+Magnitud: 8.2
+Tipo de magnitud: mw
+
+Ano: 2018
+Mes: 7
+Dia: 2
+Hora: 17
+Lat: 32.612
+Long: 78.155
+Prof: 1600
+Magnitud: 4.2
+Tipo de magnitud: mw

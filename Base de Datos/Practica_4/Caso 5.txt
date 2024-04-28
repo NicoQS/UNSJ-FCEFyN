@@ -1,0 +1,66 @@
+group:Banco 
+PERS ={ cuil:number,nombre:string,direccion:string,local:string,telefono:number
+20235824565,'Juan Perez','Calle Belgrano 567','Córdoba',3514789652
+20314875698,'Maria Rodriguez','Avenida San Martin 789','Mendoza',2614567890
+20348796324,'Laura Gomez','Avenida Corrientes 321','Rosario',3412365478
+20321584756,'Florencia Fernandez','Avenida Pueyrredon 777','Buenos Aires',1147852369
+20321456987,'Facundo Sanchez','Calle Salta 654','Rosario',3414567890
+}
+CCTES ={Nro:number,Fecha:date,ImporteInicial:number,SaldoActual:number,Cuil1:number,Cuil2:number
+654321,2022-02-15,10000,8900,20314875698,20321547863
+456789,2022-01-10,2000,780,20321546987,20321584756
+753159,2022-02-01,3500,2300,20321584756,20321456987
+369258,2022-01-22,9000,6300,20315698745,20235824565
+147852,2022-03-05,3000,2100,20348796324,20321547863
+153432,2022-03-14,1230,2100,20314875698,20321547863
+
+}
+CAHORRO= {Nro:number,Fecha:date,ImporteInicial:number,SaldoActual:number,Cuil1:number,Cuil2:number
+102547,2022-03-01,8000,6000,20321584756,20321456987
+364189,2022-02-15,5000,3400,20321547863,20321584756
+785412,2022-04-05,7000,4000,20321584756,20321456987
+652348,2022-01-10,1000,600,20321547863,20321584756
+978563,2022-03-25,3000,2000,20321456987,20321546987
+}
+TRANSAC ={NroTrans:number,NroCuenta:number,Fecha:date,Importe:number,TipoTransaccion:string,Saldo:number
+102547,147852,2022-03-01,-500,Debito,5500
+147852,102547,2022-03-05,-400,Debito,1700
+364189,753159,2022-02-15,-1000,Debito,2400
+753159,364189,2022-02-01,-1200,Debito,1100
+978563,147852,2022-03-25,-500,Debito,1500
+147852,978563,2022-03-05,-4000,Debito,-2700
+
+}
+TIPO_TRANS ={IdTipo:number,Descripcion:string
+1,Debito
+2,Credito
+3,Transferencia
+}
+
+-- 1. Nombre y cuil de todos los clientes del banco.
+πnombre, cuil (PERS)
+
+-- 2. Nombre de las personas que poseen alguna cuenta corriente o caja de ahorro.
+CC= πcuil (PERS ⨝ (PERS.cuil = CCTES.Cuil1 or PERS.cuil = CCTES.Cuil2) CCTES)
+CA= πcuil (PERS ⨝ (PERS.cuil = CAHORRO.Cuil1 or PERS.cuil = CAHORRO.Cuil2) CAHORRO)
+CC_O_CA=CC∪CA
+πnombre(PERS⨝CC_O_CA)
+
+A=(πCuil1, Cuil2 CCTES) ∪ (πCuil1, Cuil2 CAHORRO)
+B=(ρcuil←Cuil1 (πCuil1 A))∪(ρcuil←Cuil2 (πCuil2 A))
+πnombre (PERS⨝B)
+
+-- 3. Cuentas corrientes que nunca generaron saldos negativos.
+NEG=πNroCuenta(σSaldo<0 TRANSAC)
+CCTES - (CCTES ⨝ (ρNro←NroCuenta NEG))
+
+-- 4. Personas (Cuil y nombre) que tienen dinero disponible (tienen saldo a favor en alguna cta. corriente y/o en alguna caja de ahorro).
+A=σSaldoActual>0 ((πCuil1, Cuil2,SaldoActual CCTES) ∪ (πCuil1, Cuil2, SaldoActual CAHORRO))
+B=(ρcuil←Cuil1 (πCuil1 A))∪(ρcuil←Cuil2 (πCuil2 A))
+πcuil,nombre PERS⨝B
+
+-- 5. Cuentas corrientes (número y saldo) a las que se les efectuaron todos los tipos de transacción posible.
+
+TIPO=πTipoTransaccion (ρ TipoTransaccion←Descripcion TIPO_TRANS)
+TODOS=(πNroCuenta,TipoTransaccion TRANSAC)÷(TIPO)
+πNro, SaldoActual (CCTES⨝(πNro (ρNro←NroCuenta TODOS)))

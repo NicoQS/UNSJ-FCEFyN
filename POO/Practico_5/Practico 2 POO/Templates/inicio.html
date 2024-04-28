@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/principal.css')}}">
+    <link rel="stylesheet" href="../static/css/principal.css">
+</head>
+<body>
+    
+    <header>
+        <h1 class="titulo">Restaurante Sancho Panza<span></span></h1>
+    </header>
+
+    <div class="nav-bg">
+        <nav class="navegacion-principal contenedor">
+            <a href="http://localhost:5000">Inicio</a>
+            <a href="#">Contacto</a>
+        </nav>
+    </div>
+
+    <section class="hero">
+        <div class="contenido-hero">
+            <h2>Bienvenido<span></span></h2>
+            <a href="{{url_for('inicio_sesion')}}"> Iniciar Sesion</a>
+        </div>
+    </section>
+
+    <footer>
+        <p class="copyright">Todos los derechos reservados &copy;Sancho Panza 2022</p>
+    </footer>
+</body>
+</html>

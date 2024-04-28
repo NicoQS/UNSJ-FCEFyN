@@ -1,0 +1,53 @@
+group: A
+EMP={num:number, nombre:string, web:string}
+PROY={cod:number, fechai:date, fechaf:date, inversion:number, num:number, pais:string}
+GEO={cuil:number,pais:string,nombre:string,apellido:string,fechaNac:date,paisr:string}
+TRA={cod:number,cuil:number,pais:string,fecha:date}
+
+
+-- 1. Proyectos (código, inversión) desarrollados durante el 2023 en Argentina por la empresa “Techint”
+/*
+TI= (σnombre='Techint'EMP) ⨝ PROY
+πcod,inversion(σyear(fechai)<=2023 and year(fechaf)>=2023 TI)
+
+-- 2. Geólogos argentinos (todos los datos) que han trabajado en más de una ocasión en el mismo proyecto.
+ARG=σpais='Argentina' GEO
+R=TRA ⨝ (TRA.cuil=T2.cuil and TRA.cod=T2.cod and TRA.fecha≠T2.fecha) (ρ T2 TRA)
+ARG⨝(πTRA.cuil R)
+
+-- 3. Geólogos que residen en el país donde nacieron.
+σpais=paisr GEO
+
+-- 4. Empresas (todos los datos) donde trabajaron geólogos tanto de nacionalidad argentina como chilena.
+NACIONES=σpais='Argentina' or pais='Chile' GEO
+TRABAJOS=(πcuil,cod TRA)⨝NACIONES
+PROYECTOS=πnum(PROY⨝TRABAJOS)
+EMP⨝PROYECTOS
+
+-- 5. Proyectos (código, inversión y país) donde trabajaron únicamente extranjeros.
+TRAB=πcod,paisr (GEO⨝TRA)
+πPROY.cod,PROY.inversion,PROY.pais (TRAB⨝ (GEO.paisr ≠ PROY.pais and TRA.cod=PROY.cod) PROY)
+
+P = PROY ⨝ (π pais, cod (GEO ⨝ TRA))
+π cod, inversion, pais (PROY - P)
+
+-- 6. Geólogos (todos los datos) que trabajaron en todos los proyectos de la empresa “Barrick”.
+EMPBARR = πcod (PROY ⨝ (πnum (σnombre='Barrick' EMP)))
+TRABAJOS=(πcod, cuil TRA) ÷ EMPBARR
+GEO ⨝ TRABAJOS
+
+
+-- 7. Geólogos (todos los datos) argentinos y/o chilenos que trabajaron en proyectos de la empresa “Techint”.
+PTECH = πcod (PROY ⨝ (πnum (σnombre='Techint' EMP)))
+TRATECH= πcuil (TRA ⨝ PTECH)
+GEOLOGOS= σpais='Argentina' or pais='Chile' (GEO)
+GEOLOGOS⨝TRATECH
+
+-- 8. Geólogos (todos los datos) argentinos y/o chilenos que trabajaron únicamente en proyectos de la empresa “Techint”.
+
+A = π cuil (TRA ⨝ (π cod (PROY ⨝ (σ nombre≠'Techint' EMP))))
+ARGCH = π cuil (σ pais='argentina' or pais='chile' GEO)
+GEONOTECHINT = π cuil (GEO ⨝ A)
+
+(ARGCH ∩ GEONOTECHINT) ⨝ GEO
+

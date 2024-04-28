@@ -1,0 +1,111 @@
+group: Caso2 
+
+alu = {
+	dni:number, nomAlu:string, dir:string, tel:string 
+	10, Jose, "Rioja 234 (s)", 154054675
+	20, Ana, "Mendoza 23 (n)", 154054679
+	30, Luis, "Gral Paz 56(e)", 154054676
+        40, Leonel, "Gral Acha 33 (n)", 15567895
+        50, Sabrina, "Pedro de Valdivia 78", 15567892
+        60, Trump, "Catamarca 44", 15567896
+        70, Leonardo, "Av. Córdoba 765", 15567856
+        80, Pato, "Gutierrez 45", 15567811
+}
+
+mat = {
+	codM:string, nomM:string, despliegue:string, anio:number
+	M1, Algebra, s, 1
+	M2, 'Base de Datos', s, 3
+	M3, Ingles, s, 2
+	M4, 'Base de Datos Avanzadas', s, 2
+	
+	}
+	
+corre = {
+	codM:string, codMc:string  
+	M2, M1
+	M4, M3
+	M4, M1
+	M3, M2
+	}
+	
+insc = {
+	dni:number, codM:string, fecha:date
+	10, M1,2018-03-23
+	10, M2,2018-03-23
+	20, M2,2018-03-13
+	10, M3,2018-03-25
+        10, M4,2019-03-25
+	20, M1,2018-03-23
+	30, M2,2019-08-05
+	40, M3,2018-03-23
+	50, M4,2018-04-04
+	60, M2,2019-03-23
+	70, M3,2019-08-23
+	80, M4,2018-08-23
+        80, M3,2020-03-23
+	}
+	
+bol = {
+	dni:number, codM:string, fecha:date
+	10, M1, 2019-05-01
+	10, M2, 2018-05-01
+	10, M3, 2019-05-01
+	10, M4, 2020-05-01
+	20, M3, 2019-02-01
+	20, M1, 2019-02-01
+	30, M2, 2020-02-01
+	40, M3, 2020-02-01
+	60, M2, 2020-02-01
+	70, M3, 2020-02-01
+	80, M4, 2019-02-01
+	}
+exa = {
+	dni:number, codM:string, fecha:date, nota:number
+	10, M1, 2018-02-01, 2
+	10, M1, 2018-04-21, 2
+	10, M1, 2018-02-04, 10
+	10, M2, 2000-02-01, 9
+	10, M3, 2000-02-01, 4
+	10, M4, 2000-02-01, 9
+	20, M3, 2000-02-01, 6
+	20, M4, 2000-02-01, 8
+	50, M4, 2020-05-08, 10
+	60, M2, 2019-05-08, 2
+	60, M2, 2019-08-12, 7
+	70, M3, 2020-02-02, 9
+	80, M4, 2020-02-01, 4
+	80, M1, 2020-02-01, 7
+	80, M2, 2020-02-11, 7
+	80, M4, 2019-12-01, 2
+}
+
+
+-- 1. Alumnos (todos los datos) que nunca tuvieron aplazos.
+NEG=σnota<=4 exa
+APLAZARON = alu ⨝ (πdni NEG)
+alu - APLAZARON 
+
+-- 2. Alumnos (nombre) que han rendido (aprobado) Bases de Datos y Bases de Datos Avanzadas.
+BD= πcodM (σnomM='Base de Datos' mat)
+BDA= πcodM (σnomM='Base de Datos Avanzadas' mat)
+BASE =πdni (bol⨝BD)
+BASEA=πdni(bol⨝BDA)
+ALUM=BASE∩BASEA
+πnomAlu(alu⨝ALUM)
+
+-- 3. Materias (todos los datos) que tienen algún inscripto en el 2023.
+M2023 = σyear(fecha)=2023 (insc)
+mat⨝(πcodM (M2023))
+
+-- 4. Exámenes (nombre del alumno, nombre de la materia, fecha y nota) rendidos en forma regular.
+REGULAR=(πdni, codM (bol)) ∩ (πdni, codM (exa))
+NOMBRES=πdni,nomAlu ((πdni (alu) ⨝ πdni (REGULAR)) ⨝ (alu))
+MATERIAS=πdni,nomM (REGULAR ⨝ mat)
+FyN=πdni,fecha,nota(exa⨝REGULAR)
+πnomAlu,nomM,fecha,nota((NOMBRES⨝MATERIAS)⨝FyN)
+
+-- 5. Alumnos (Cuil y nombre) que han sacado boleta de todas las materias de primer y segundo año.
+MATERIAS= (σanio=1 mat) ∪ (σanio=2 mat)
+BOLETAS=(πdni,codM bol) ÷ (πcodM MATERIAS)
+alu⨝BOLETAS

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Inicio Sesion</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/stylegeneral.css')}}">
+</head>
+<body>
+    <header>
+        <h1>Iniciar Sesion</h1>
+    </header>
+    
+    <section>
+        <form action = "{{url_for('login')}}" method = "POST">
+            <fieldset>
+                <h3>Contactanos llenando todos los campos</h3>
+                <div>
+                    <label for="email">Email<abrr title="Este campo es obligatorio" aria-label="required"> *</abrr></label></label>
+                    <input type="email" name = "correo" placeholder="Tu email" required>
+                </div>
+
+                <div>
+                    <label for = "contraseña">Contraseña<abrr title="Este campo es obligatorio" aria-label="required"> *</abrr></label></label>
+                    <input type="password" name = "clave" placeholder="Tu contraseña" required>
+                </div>
+
+                <div class="div-input">
+                    <input type="submit" value="Enviar">
+                </div>
+            </fieldset>
+        </form>
+    </section>
+
+</body>
+</html>
+
+

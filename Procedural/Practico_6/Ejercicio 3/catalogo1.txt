@@ -1,0 +1,21 @@
+Pais: Argentina
+Ano: 2020
+Mes: 3
+Dia: 20
+Hora: 24
+Lat: 71.421412
+Long: 63.525155
+Prof: 600
+Magnitud MB: 4
+Magnitud MS: 5
+
+Pais: Chile
+Ano: 2019
+Mes: 2
+Dia: 10
+Hora: 6
+Lat: 70.421412
+Long: 61.525155
+Prof: 500
+Magnitud MB: 2
+Magnitud MS: 7
