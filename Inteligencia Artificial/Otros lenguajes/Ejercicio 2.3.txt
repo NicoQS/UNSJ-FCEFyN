@@ -1,0 +1,29 @@
+/*
+NODOS = [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R]
+
+Aristas
+A B
+A C
+B F
+B D
+C D
+D E
+E R
+F G
+F K
+G H
+G I
+H I
+H K
+I J
+I L
+J M
+M N
+L N
+N O
+N P
+P R
+K O
+K Q
+Q R
+*/
