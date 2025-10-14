@@ -1,0 +1,122 @@
+COMPILER Automata
+
+/*
+  Compilador para definir Autómatas Finitos Deterministas
+  Lenguaje simple e intuitivo para usuarios no expertos
+  Con validación obligatoria de secciones y tabla de símbolos
+*/
+
+CHARACTERS
+  letter = 'A'..'Z' + 'a'..'z' + '_'.
+  digit  = '0'..'9'.
+  cr     = '\r'.
+  lf     = '\n'.
+  tab    = '\t'.
+  stringChar = ANY - '"' - '\\' - cr - lf.
+  singleStringChar = ANY - '\'' - '\\' - cr - lf.
+
+TOKENS
+  ident  = letter {letter | digit}.
+  string = '"' {stringChar | '\\' '"'} '"' | '\'' {singleStringChar | '\\' '\''} '\''.
+
+COMMENTS FROM "/*" TO "*/" NESTED
+COMMENTS FROM "//" TO lf
+
+IGNORE cr + lf + tab
+
+PRODUCTIONS
+
+Automata = 
+  "AUTOMATA" 
+  ident (. string nombreAutomata = t.val; 
+            AutomataBuilder.IniciarAutomata(nombreAutomata); .)
+  
+  [ "ALFABETO" ":" 
+    ListaSimbolos (. .)
+  ]
+  
+  "ESTADOS" ":" 
+  ListaEstados (. .)
+
+  "INICIAL" ":" 
+  ident (. AutomataBuilder.DefinirEstadoInicial(t.val); .)
+  
+  [ "FINALES" ":" 
+    ListaEstadosFinales (. .)
+  ]
+  
+  "TRANSICIONES" ":"
+  {Transicion} (. if (!AutomataBuilder.TieneTransiciones()) {
+                      SemErr("ERROR: El autómata debe tener al menos una transición."); 
+                  } .)
+  
+  "FIN" (. AutomataBuilder.FinalizarConValidacion(); .)
+.
+
+ListaSimbolos =
+  string (. string simbolo1 = t.val.Trim('"', '\'');
+    	AutomataBuilder.AgregarSimbolo(simbolo1); .)
+  { "," 
+    string (. string simbolo2 = t.val.Trim('"', '\''); 
+        AutomataBuilder.AgregarSimbolo(simbolo2); .)
+  }
+.
+
+ListaEstados =
+  ident (. if (!AutomataBuilder.AgregarEstadoConValidacion(t.val)) {
+              SemErr("ERROR: Estado duplicado: " + t.val);
+           } .)
+  { "," 
+    ident (. if (!AutomataBuilder.AgregarEstadoConValidacion(t.val)) {
+                SemErr("ERROR: Estado duplicado: " + t.val);
+             } .)
+  }
+.
+
+ListaEstadosFinales =
+  ident (. if (!AutomataBuilder.ValidarEstadoFinal(t.val)) {
+              SemErr("ERROR: Estado final no declarado: " + t.val);
+           } else {
+              AutomataBuilder.AgregarEstado(t.val);
+              AutomataBuilder.MarcarEstadoFinal(t.val);
+           } .)
+  { "," 
+    ident (. if (!AutomataBuilder.ValidarEstadoFinal(t.val)) {
+                SemErr("ERROR: Estado final no declarado: " + t.val);
+             } else {
+                AutomataBuilder.AgregarEstado(t.val); 
+                AutomataBuilder.MarcarEstadoFinal(t.val);
+             } .)
+  }
+.
+
+Transicion =
+  ident (. string estadoOrigen = t.val; 
+           if (!AutomataBuilder.ValidarEstadoTransicion(estadoOrigen)) {
+              SemErr("ERROR: Estado origen no declarado: " + estadoOrigen);
+           } .)
+  ( "->" | "→" ) (. .)
+  ident (. string estadoDestino = t.val; 
+           if (!AutomataBuilder.ValidarEstadoTransicion(estadoDestino)) {
+              SemErr("ERROR: Estado destino no declarado: " + estadoDestino);
+           } .)
+  ( "con" | "mediante" | "usando" ) (. .)
+  string (. string simboloTrans = t.val.Trim('"', '\''); 
+        // Solo agregar la transición si ambos estados son válidos
+        if (AutomataBuilder.ValidarEstadoExiste(estadoOrigen) && AutomataBuilder.ValidarEstadoExiste(estadoDestino)) {
+            if (!AutomataBuilder.AgregarTransicionConValidacion(estadoOrigen, estadoDestino, simboloTrans)) {
+                SemErr("ERROR: Transicion duplicada desde " + estadoOrigen + " con simbolo '" + simboloTrans + "'");
+            }
+        } .)
+  { "," 
+    string (. string simboloTrans2 = t.val.Trim('"', '\''); 
+        // Solo agregar la transición si ambos estados son válidos
+        if (AutomataBuilder.ValidarEstadoExiste(estadoOrigen) && AutomataBuilder.ValidarEstadoExiste(estadoDestino)) {
+            if (!AutomataBuilder.AgregarTransicionConValidacion(estadoOrigen, estadoDestino, simboloTrans2)) {
+                SemErr("ERROR: Transicion duplicada desde " + estadoOrigen + " con simbolo '" + simboloTrans2 + "'");
+            }
+        } .)
+  }
+.
+
+END Automata.
