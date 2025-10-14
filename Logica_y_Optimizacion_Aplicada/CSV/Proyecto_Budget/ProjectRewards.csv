@@ -1,0 +1,16 @@
+project,period,reward
+IBM_5500,1,1000
+IBM_5500,2,3000
+IBM_5500,3,3000
+Sun_2000,1,1200
+Sun_2000,2,3200
+Sun_2000,3,3200
+New_CFO,1,2000
+New_CFO,2,2000
+New_CFO,3,2000
+Promote_SW_Reg,1,4000
+Promote_SW_Reg,2,4000
+Promote_SW_Reg,3,4000
+Stock_repur,1,2000
+Stock_repur,2,2000
+Stock_repur,3,2000

@@ -1,0 +1,7 @@
+//Productos = {"amoniaco", "cloruro_amonico"};
+Productos = {<amoniaco>, <cloruro_amonico>};
+
+Componentes = {"nitrogeno", "hidrogeno", "oxigeno"};
+demanda = [[1, 3, 0], [1, 4, 1]];
+beneficio = [40, 50];
+stock = [50, 180, 40];

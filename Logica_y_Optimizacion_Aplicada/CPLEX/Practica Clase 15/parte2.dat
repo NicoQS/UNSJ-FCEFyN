@@ -1,0 +1,85 @@
+// --------------------------------------------------------------------------
+// Licensed Materials - Property of IBM
+//
+// 5725-A06 5725-A29 5724-Y48 5724-Y49 5724-Y54 5724-Y55
+// Copyright IBM Corporation 1998, 2013. All Rights Reserved.
+//
+// Note to U.S. Government Users Restricted Rights:
+// Use, duplication or disclosure restricted by GSA ADP Schedule
+// Contract with IBM Corp.
+// --------------------------------------------------------------------------
+
+// Número de casas a construir
+NbHouses = 5;
+
+// Nombres de los trabajadores
+WorkerNames = {"Joe", "Jim"};
+
+// Nombres de las tareas
+TaskNames = { 
+  "masonry", 
+  "carpentry", 
+  "plumbing", 
+  "ceiling",
+  "roofing", 
+  "painting", 
+  "windows", 
+  "facade",
+  "garden", 
+  "moving" 
+};
+
+// Duración de cada tarea (en días)
+Duration =  [
+  35,  // masonry
+  15,  // carpentry
+  40,  // plumbing
+  15,  // ceiling
+  05,  // roofing
+  10,  // painting
+  05,  // windows
+  10,  // facade
+  05,  // garden
+  05   // moving
+];
+
+// Fecha de inicio más temprana para cada casa
+ReleaseDate = [0, 0, 151, 59, 243];
+
+// Fecha de vencimiento preferida para cada casa
+DueDate = [120, 212, 304, 181, 425];
+
+// Costo por día de retraso para cada casa
+Weight = [100.0, 100.0, 100.0, 200.0, 100.0];
+
+// Restricciones de precedencia entre tareas
+Precedences = {
+  <"masonry",   "carpentry">,
+  <"masonry",   "plumbing">,
+  <"masonry",   "ceiling">,
+  <"carpentry", "roofing">,
+  <"ceiling",   "painting">,
+  <"roofing",   "windows">,
+  <"roofing",   "facade">,
+  <"plumbing",  "facade">,
+  <"roofing",   "garden">,
+  <"plumbing",  "garden">,
+  <"windows",   "moving">,
+  <"facade",    "moving">,
+  <"garden",    "moving">,
+  <"painting",  "moving">
+};
+
+// Asignación de trabajador para cada tarea
+Worker = #[ 
+  "masonry"  : "Joe",
+  "carpentry": "Joe",
+  "plumbing" : "Jim",
+  "ceiling"  : "Jim",
+  "roofing"  : "Joe",
+  "painting" : "Jim",
+  "windows"  : "Jim",
+  "facade"   : "Joe",
+  "garden"   : "Joe",
+  "moving"   : "Jim"
+]#;

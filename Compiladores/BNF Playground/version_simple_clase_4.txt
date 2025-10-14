@@ -1,0 +1,5 @@
+<Expr> ::= <Term> <MasTerm>
+
+<MasTerm> ::= E | "+" <Term> <MasTerm>
+
+<Term> ::= "a" | "b" | "x" | "y" | "1" | "2" | "3"

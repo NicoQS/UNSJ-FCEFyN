@@ -1,0 +1,306 @@
+// Modelo genérico de Capital Budgeting para cualquier número de períodos
+
+
+// ------------------------------------------------------------
+//  Importación de datos desde CSV:
+//    • parameters.csv     → parámetros del modelo
+//    • MinBal.csv        → saldo mínimo por período  
+//    • ProjectCosts.csv  → costos de setup por proyecto y período
+//    • ProjectRewards.csv → recompensas por proyecto y período
+//    • MustTakeOne.csv   → restricciones de must-take-one
+// ------------------------------------------------------------
+
+// 1) Parámetros escalares
+tuple ParamRow { 
+  string Parameter; 
+  float Value; 
+}
+{ParamRow} parameters = ...;
+
+// Extraer parámetros principales
+int T             = ftoi(sum(r in parameters: r.Parameter=="T") r.Value);
+int NbMustTakeOne = ftoi(sum(r in parameters: r.Parameter=="NbMustTakeOne") r.Value);
+float Rate        = sum(r in parameters: r.Parameter=="Rate") r.Value;
+float InitBal     = sum(r in parameters: r.Parameter=="InitBal") r.Value;
+
+// 2) Definir rango de períodos
+range Periods = 1..T;
+
+// 3) Saldo mínimo por período
+tuple MinBalRow { 
+  int Period; 
+  float MinBal; 
+}
+{MinBalRow} MinBal = ...;
+
+// Array de saldos mínimos indexado por período
+float MinBalArr[t in Periods] = 
+  sum(m in MinBal: m.Period == t) m.MinBal;
+
+// 4) Costos de setup de proyectos
+tuple ProjectCostRow {
+  string project;
+  int period;
+  float cost;
+}
+{ProjectCostRow} ProjectCosts = ...;
+
+// 5) Recompensas de proyectos
+tuple ProjectRewardRow {
+  string project;
+  int period;
+  float reward;
+}
+{ProjectRewardRow} ProjectRewards = ...;
+
+// 6) Obtener conjunto de nombres de proyectos únicos
+{string} ProjectNames = 
+  {c.project | c in ProjectCosts} union {r.project | r in ProjectRewards};
+
+// 7) Must-take-one constraints
+tuple MustTakeRow { 
+  int group; 
+  string project; 
+}
+{MustTakeRow} MustTakeOne = ...;
+
+// 8) Arrays para costos y recompensas 
+float ProjectCostArr[p in ProjectNames][t in Periods] = 
+  sum(c in ProjectCosts: c.project == p && c.period == t) c.cost;
+
+float ProjectRewardArr[p in ProjectNames][t in Periods] = 
+  sum(r in ProjectRewards: r.project == p && r.period == t) r.reward;
+
+// 8.1) Pre-calcular factores de descuento para el post-procesamiento
+float DiscountFactor[t in 0..T] = 1 / pow(1 + Rate, t);
+
+// 9) Variables de decisión
+dvar float   Bal[0..T];                           // Saldo al final de cada período
+dvar boolean doProj[ProjectNames][Periods];       // 1 si el proyecto se inicia en el período
+dvar boolean SelectedProj[ProjectNames][Periods]; // 1 si el proyecto está activo en el período
+
+// 10) Función objetivo: Maximizar NPV
+maximize 
+  Bal[T] / pow(1 + Rate, T) - Bal[0];
+
+// 11) Restricciones
+subject to {
+
+  // Saldo inicial
+  InitialBalance:
+  Bal[0] == InitBal;
+
+  // Flujo de caja por período
+  forall(t in Periods)
+    CtBalance: 
+    Bal[t] == (1 + Rate) * (
+      Bal[t-1]
+      - sum(p in ProjectNames) ProjectCostArr[p][t] * doProj[p][t]
+      + sum(p in ProjectNames) ProjectRewardArr[p][t] * SelectedProj[p][t]
+    );
+
+  // Saldo mínimo por período
+  forall(t in Periods)
+    CtMinBal:
+    Bal[t] >= MinBalArr[t];
+
+  // SelectedProj: un proyecto está activo solo después de ser iniciado
+  forall(p in ProjectNames, t in Periods)
+    CtSelected:
+    SelectedProj[p][t] == sum(s in 1..t-1) doProj[p][s];
+
+  // Cada proyecto se puede iniciar a lo sumo una vez
+  forall(p in ProjectNames)
+    CtOnce:
+    sum(t in Periods) doProj[p][t] <= 1;
+
+  // Must-take-one: exactamente un proyecto por grupo debe estar activo al final
+  forall(g in 1..NbMustTakeOne)
+    CtMustTake:
+    sum(p in ProjectNames, m in MustTakeOne: 
+        m.group == g && m.project == p) SelectedProj[p][T] == 1;
+}
+
+// ------------------------------------------------------------
+// TUPLAS DE SALIDA GENÉRICAS
+// ------------------------------------------------------------
+
+tuple SolutionSummary {
+  float NPV;
+  float FinalBalance;
+  float InitialBalance;
+  int TotalPeriods;
+  int TotalProjects;
+  int ProjectsSelected;
+  string Status;
+}
+
+tuple SelectedProjectDetail {
+  string ProjectName;
+  int StartPeriod;
+  float SetupCost;
+  float TotalReward;
+  float NPV_Contribution;
+}
+
+tuple BalanceDetail {
+  int Period;
+  float Balance;
+  float DiscountedBalance;
+}
+
+tuple PeriodCashFlow {
+  int Period;
+  float CashIn;
+  float CashOut;
+  float NetCashFlow;
+}
+
+// Conjuntos de salida
+{SolutionSummary} SolutionResults = {};
+{SelectedProjectDetail} SelectedProjectsOutput = {};
+{BalanceDetail} BalanceResults = {};
+{PeriodCashFlow} CashFlowResults = {};
+
+// 12) Post-procesamiento
+execute POPULATE_OUTPUT_TUPLES {
+  if (cplex.getCplexStatus() == 1) {
+    
+    writeln("=== RESULTADOS DE CAPITAL BUDGETING GENÉRICO ===");
+    writeln("Períodos analizados: ", T);
+    writeln("NPV = ", cplex.getObjValue());
+    writeln();
+
+    // Contar proyectos seleccionados
+    var projectsSelected = 0;
+    var totalProjects = 0;
+    
+    // Contar total de proyectos disponibles
+    for(var p in ProjectNames) {
+      totalProjects++;
+    }
+    
+    // Análisis de proyectos seleccionados
+    writeln("Proyectos seleccionados:");
+    for(var p in ProjectNames) {
+      var isSelected = false;
+      var startPeriod = 0;
+      var setupCost = 0;
+      var totalReward = 0;
+      
+      // Encontrar cuándo se inicia el proyecto
+      for(var t in Periods) {
+        if(doProj[p][t].solutionValue > 0.5) {
+          isSelected = true;
+          startPeriod = t;
+          setupCost = ProjectCostArr[p][t];
+          projectsSelected++;
+          break;
+        }
+      }
+      
+      if(isSelected) {
+        // Calcular recompensa total del proyecto
+        for(var t in Periods) {
+          if(SelectedProj[p][t].solutionValue > 0.5) {
+            totalReward += ProjectRewardArr[p][t];
+          }
+        }
+        
+        writeln("  - ", p, " iniciado en período ", startPeriod, 
+                " (Costo: ", setupCost, ", Recompensa total: ", totalReward, ")");
+        
+        // Agregar a salida estructurada
+        SelectedProjectsOutput.add(
+          p,                                    // ProjectName
+          startPeriod,                         // StartPeriod
+          setupCost,                           // SetupCost
+          totalReward,                         // TotalReward
+          totalReward - setupCost              // NPV_Contribution
+        );
+      }
+    }
+    
+    writeln();
+    
+    writeln("Análisis de flujo de caja:");
+    writeln("Período\tSaldo\t\tEntradas\tSalidas\t\tFlujo Neto");
+    
+    for(var t = 0; t <= T; t++) {
+      var cashIn = 0;
+      var cashOut = 0;
+      
+      if(t > 0) {
+        // Calcular entradas (recompensas)
+        for(var p in ProjectNames) {
+          if(SelectedProj[p][t].solutionValue > 0.5) {
+            cashIn += ProjectRewardArr[p][t];
+          }
+        }
+        
+        // Calcular salidas (costos de setup)
+        for(var p in ProjectNames) {
+          if(doProj[p][t].solutionValue > 0.5) {
+            cashOut += ProjectCostArr[p][t];
+          }
+        }
+      }
+      
+      var netFlow = cashIn - cashOut;
+      var balance = Bal[t].solutionValue;
+      
+      writeln(t, "\t\t", balance, "\t\t", cashIn, "\t\t", cashOut, "\t\t", netFlow);
+      
+      // Usar valores directos - OPL automáticamente manejará el formato en CSV
+      var discountedBalance = balance * DiscountFactor[t];
+      
+      // Agregar a resultados estructurados
+      BalanceResults.add(
+        t,                                      // Period
+        balance,                               // Balance
+        discountedBalance                      // DiscountedBalance
+      );
+      
+      if(t > 0) {
+        CashFlowResults.add(
+          t,                                    // Period
+          cashIn,                              // CashIn
+          cashOut,                             // CashOut
+          netFlow                              // NetCashFlow
+        );
+      }
+    }
+    
+    // Resumen final
+    SolutionResults.add(
+      cplex.getObjValue(),                      // NPV
+      Bal[T].solutionValue,                    // FinalBalance
+      Bal[0].solutionValue,                    // InitialBalance
+      T,                                       // TotalPeriods
+      totalProjects,                           // TotalProjects
+      projectsSelected,                        // ProjectsSelected
+      "OPTIMAL"                                // Status
+    );
+    
+    writeln();
+    writeln("Resumen:");
+    writeln("- Total de proyectos disponibles: ", totalProjects);
+    writeln("- Proyectos seleccionados: ", projectsSelected);
+    writeln("- Saldo inicial: ", Bal[0].solutionValue);
+    writeln("- Saldo final: ", Bal[T].solutionValue);
+    writeln("- NPV: ", cplex.getObjValue());
+    
+  } else {
+    SolutionResults.add(
+      0,                                        // NPV
+      0,                                        // FinalBalance  
+      InitBal,                                  // InitialBalance
+      T,                                        // TotalPeriods
+      0,                                        // TotalProjects
+      0,                                        // ProjectsSelected
+      "NO_SOLUTION"                             // Status
+    );
+    
+    writeln("No se encontró solución óptima. Estado CPLEX: ", cplex.getCplexStatus());
+  }
+}

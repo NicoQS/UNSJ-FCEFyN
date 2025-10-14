@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ASCII"?><project>
+    	
+    <version>1.0</version>
+    	
+    <description>Capital Budgeting, Integer Programming</description>
+    	
+    <configs>
+        		
+        <config default="true" name="Basic Configuration" category="opl">
+            			
+            <ref name="budget.dat" type="data">
+			</ref>
+            			
+            <ref name="budget.mod" type="model">
+			</ref>
+            		
+        </config>
+        		
+        <config default="false" name="Config_Tuples" category="opl">
+            			
+            <ref name="budget_tuples.dat" type="data">
+			</ref>
+            			
+            <ref name="budget_tuples.mod" type="model">
+			</ref>
+            		
+        </config>
+        	
+    </configs>
+    	
+
+</project>

@@ -1,0 +1,16 @@
+project,period,cost
+IBM_5500,1,4000
+IBM_5500,2,4000
+IBM_5500,3,4100
+Sun_2000,1,4500
+Sun_2000,2,4500
+Sun_2000,3,4500
+New_CFO,1,8000
+New_CFO,2,8000
+New_CFO,3,8000
+Promote_SW_Reg,1,2000
+Promote_SW_Reg,2,2000
+Promote_SW_Reg,3,2000
+Stock_repur,1,3500
+Stock_repur,2,5000
+Stock_repur,3,3000

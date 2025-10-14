@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="ASCII"?><project>
+    	
+    <version>1.0</version>
+    	
+    <configs>
+        		
+        <config default="true" name="configuracion_1" category="opl">
+            			
+            <ref name="version_1.mod" type="model">
+			</ref>
+            			
+            <ref name="version_1.dat" type="data">
+			</ref>
+            		
+        </config>
+        		
+        <config default="false" name="configuracion_2" category="opl">
+            			
+            <ref name="version_2.mod" type="model">
+			</ref>
+            		
+        </config>
+        		
+        <config default="false" name="configuracion_3" category="opl">
+            			
+            <ref name="version_3.mod" type="model">
+			</ref>
+            		
+        </config>
+        		
+        <config default="false" name="configuracion_4" category="opl">
+            			
+            <ref name="version_4.mod" type="model">
+			</ref>
+            			
+            <ref name="version_4.dat" type="data">
+			</ref>
+            		
+        </config>
+        		
+        <config default="false" name="configuracion_5" category="opl">
+            			
+            <ref name="version_5_avanzado.mod" type="model">
+			</ref>
+            			
+            <ref name="version_5_avanzado.dat" type="data">
+			</ref>
+            		
+        </config>
+        		
+        <config default="false" name="configuracion_6" category="opl">
+		</config>
+        	
+    </configs>
+    	
+
+</project>

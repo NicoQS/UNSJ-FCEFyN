@@ -1,0 +1,26 @@
+{
+  "name": "node-starter",
+  "private": true,
+  "dependencies": {
+    "mathjs": "^13.2.1",
+    "polynomial": "^1.5.3",
+    "print-tree": "^0.1.5",
+    "ts-node": "^10.9.2",
+    "tsc": "^2.0.4",
+    "tsx": "^4.20.6",
+    "typescript": "^5.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.3"
+  },
+  "scripts": {
+    "main": "ts-node src/main.ts",
+    "start": "ts-node src/main.ts",
+    "burrowWheeler": "ts-node src/compresion/utils/burrowWheeler.ts",
+    "huffman_dinamico": "ts-node src/compresion/dinamicas/huffman.ts",
+    "aritmetico": "ts-node src/compresion/dinamicas/aritmetico.ts",
+    "lz": "ts-node src/compresion/dinamicas/LZ.ts",
+    "estaticas": "ts-node src/compresion/estaticas/estaticas.ts",
+    "markov": "ts-node src/compresion/markov.ts"
+  }
+}

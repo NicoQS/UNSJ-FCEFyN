@@ -1,0 +1,18 @@
+!SESSION 2025-06-20 11:58:33.460 -----------------------------------------------
+eclipse.buildId=Build R0
+java.fullversion=11.0.13+8
+JRE 11 Windows 10 amd64-64-Bit Compressed References 20211022_218 (JIT enabled, AOT enabled)
+OpenJ9   - e1e72c497
+OMR      - 299b6a2d2
+JCL      - 2d83aa3b76 based on jdk-11.0.13+8
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=es_AR
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -clean -clean -data file:/C:/Users/Nicol/Documentos/FACULTAD/Programacion/Logica_y_Optimizacion_Aplicada/CPLEX/ -clean
+
+!ENTRY org.eclipse.ui.ide 4 4 2025-06-20 11:58:39.948
+!MESSAGE -data /valid/path, workspace already set:file:/C:/Users/Nicol/Documentos/FACULTAD/Programacion/Logica_y_Optimizacion_Aplicada/CPLEX/
+
+!ENTRY org.eclipse.ui 2 2 2025-06-20 11:58:46.178
+!MESSAGE Invalid preference category path: org.eclipse.wst.html.ui.preferences.web (bundle: org.eclipse.wst.jsdt.ui, page: org.eclipse.wst.jsdt.ui.preferences.JavaBasePreferencePage)
+
+!ENTRY ilog.odms.ide.opllang 1 0 2025-06-20 11:59:46.268
+!MESSAGE concert_wrap.IloEndMT

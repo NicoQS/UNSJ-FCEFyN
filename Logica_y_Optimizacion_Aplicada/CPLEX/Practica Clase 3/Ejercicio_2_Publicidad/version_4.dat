@@ -1,0 +1,7 @@
+Programas = {"programaA", "programaB"};
+Tipos = {"variedad", "publicidad"};
+
+// Datos
+demanda = [[20,1],[10,1]];
+beneficio = [30000, 10000];
+requerimiento = [80, 6];

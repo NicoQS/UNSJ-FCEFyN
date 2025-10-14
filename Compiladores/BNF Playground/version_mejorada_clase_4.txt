@@ -1,0 +1,25 @@
+/* Gramática simplificada para verificar transformación EBNF->BNF */
+
+/* En BNF Playground epsilon se escribe como E, no como punto */
+
+<Expr> ::= <Term> <MasTerm>
+
+<MasTerm> ::= E | "+" <Term> <MasTerm>
+
+<Term> ::= <Factor> <MasFactor>
+
+<MasFactor> ::= E | "*" <Factor> <MasFactor>
+
+<Factor> ::= <number> | <ident> | "(" <Expr> ")"
+
+/* Tokens simplificados para testing */
+<ident> ::= "a" | "b" | "c" | "x" | "y" | "z"
+
+<number> ::= "0" | "1" | "2" | "3" | "4" | "5"
+
+/* Versión aún más simple para pruebas rápidas */
+<SimpleExpr> ::= <digit> <MoreDigits>
+
+<MoreDigits> ::= E | "+" <digit> <MoreDigits>
+
+<digit> ::= "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"

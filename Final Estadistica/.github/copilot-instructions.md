@@ -1,0 +1,6 @@
+---
+applyTo: "**"
+---
+@workspace
+#codebase
+*.py

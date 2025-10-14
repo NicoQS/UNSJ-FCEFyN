@@ -1,0 +1,1001 @@
+Team,Position,Height,Weight,Age
+SFG,Third Base,71,177,26.44
+HOU,First Base,68,165,39.55
+ATL,Second Base,77,195,24.02
+ATL,Third Base,79,192,33.86
+NYM,Second Base,75,186,36.43
+BOS,Catcher,72,178,20.82
+SFG,Shortstop,77,189,33.41
+ATL,Shortstop,69,172,39.03
+ATL,Second Base,71,173,22.48
+ATL,Second Base,74,182,37.92
+BOS,First Base,67,166,31.9
+STL,Catcher,71,180,32.33
+CHC,Catcher,75,183,32.26
+BOS,Pitcher,75,191,25.98
+STL,Shortstop,72,182,38.7
+BAL,Shortstop,69,168,38.95
+TOR,Third Base,68,169,32.51
+SFG,Catcher,72,181,35.67
+BOS,First Base,72,182,32.25
+STL,Catcher,67,162,29.69
+NYM,Pitcher,70,175,33.22
+HOU,Catcher,69,167,31.06
+NYM,First Base,66,161,31.95
+HOU,Shortstop,72,175,35.68
+SFG,Shortstop,76,189,29.62
+LAD,Third Base,78,199,20.82
+BAL,Third Base,70,178,23.28
+STL,Third Base,66,165,28.77
+TOR,Second Base,80,195,34.5
+HOU,Second Base,76,185,31.87
+BAL,Catcher,69,168,33.01
+BOS,Outfielder,65,165,29.59
+ATL,Outfielder,76,187,32.31
+SFG,Second Base,74,180,26.58
+BAL,Pitcher,70,174,29.4
+ATL,Third Base,77,193,34.89
+TOR,Shortstop,76,190,37.44
+ATL,First Base,73,177,28.67
+BOS,Pitcher,65,161,20.87
+SFG,First Base,75,186,23.23
+CHC,Shortstop,75,187,20.42
+TOR,Catcher,79,194,33.07
+HOU,Outfielder,74,184,26.65
+BAL,Second Base,80,201,30.85
+ATL,First Base,76,189,29.87
+LAD,Outfielder,76,189,21.63
+SFG,Second Base,80,199,28.07
+BOS,Third Base,79,201,24.41
+HOU,Outfielder,78,199,28.37
+STL,Catcher,78,192,24.07
+LAD,Shortstop,79,192,36.81
+NYM,Catcher,78,194,23.48
+STL,Pitcher,67,170,39.22
+ATL,Second Base,76,185,28.32
+NYM,Third Base,71,174,36.92
+TOR,Catcher,68,168,32.58
+LAD,Pitcher,80,195,34.71
+CHC,Catcher,73,177,35.35
+SFG,Shortstop,67,169,30.1
+BOS,First Base,69,168,30.87
+SFG,Second Base,67,169,30.28
+NYM,Outfielder,71,178,31.76
+SFG,Catcher,69,176,20.59
+ATL,Catcher,73,186,27.91
+NYM,Pitcher,71,173,32.12
+STL,First Base,66,165,31.95
+NYM,First Base,68,170,35.86
+HOU,Third Base,73,179,33.1
+LAD,Shortstop,76,186,39.84
+BOS,Third Base,78,190,25.68
+SFG,First Base,66,165,27.18
+HOU,First Base,74,184,27.68
+LAD,First Base,73,185,29.32
+LAD,First Base,74,180,36.72
+TOR,Second Base,69,173,24.72
+HOU,Outfielder,66,164,35.52
+NYM,Catcher,68,169,28.11
+TOR,Catcher,76,186,32.04
+CHC,Second Base,79,194,32.65
+NYM,Shortstop,76,191,27.46
+BOS,Catcher,71,177,30.25
+CHC,Shortstop,76,186,28.26
+BOS,Second Base,77,192,21.38
+BOS,Shortstop,72,176,28.74
+LAD,Third Base,79,193,21.95
+STL,Third Base,67,163,28.1
+HOU,Outfielder,78,192,31.86
+HOU,Second Base,65,158,31.59
+NYM,Third Base,68,168,33.25
+BOS,Pitcher,66,168,21.91
+HOU,First Base,72,180,33.04
+BOS,Third Base,68,165,26.24
+STL,Pitcher,66,167,27.98
+CHC,Outfielder,78,196,37.16
+BAL,Shortstop,70,179,20.18
+ATL,Third Base,70,172,31.77
+BAL,Catcher,74,180,31.97
+CHC,Outfielder,68,169,27.93
+ATL,Catcher,70,173,24.74
+BOS,Shortstop,77,196,24.69
+ATL,Second Base,79,199,37.67
+ATL,Second Base,66,160,28.84
+NYM,Pitcher,74,189,26.62
+ATL,Catcher,76,185,28.98
+TOR,Pitcher,66,163,33.39
+TOR,Pitcher,74,187,22.92
+SFG,Shortstop,78,194,28.99
+STL,Outfielder,68,166,31.76
+BAL,Third Base,78,195,38.97
+TOR,Second Base,79,196,25.05
+STL,Second Base,80,196,27.19
+STL,Outfielder,79,194,27.59
+NYM,Outfielder,72,183,32.11
+BOS,Shortstop,78,196,27.13
+STL,Shortstop,71,178,30.67
+NYM,First Base,76,190,35.64
+LAD,Pitcher,73,184,34.11
+BAL,Outfielder,78,193,28.93
+BAL,Second Base,72,182,37.28
+BOS,Outfielder,69,170,31.16
+LAD,Pitcher,80,202,30.8
+STL,Outfielder,77,195,20.68
+ATL,Second Base,66,162,39.73
+LAD,Outfielder,79,194,22.46
+CHC,Second Base,69,168,24.62
+BAL,Outfielder,72,184,21.03
+CHC,Shortstop,74,182,32.8
+NYM,Shortstop,73,179,24.49
+HOU,Catcher,76,189,23.6
+SFG,Second Base,76,189,21.77
+BOS,Pitcher,76,186,22.07
+BOS,Second Base,77,196,31.69
+LAD,Third Base,73,182,33.76
+HOU,Pitcher,77,191,27.95
+CHC,First Base,79,197,29.6
+BOS,Third Base,77,187,33.72
+NYM,Catcher,65,161,20.35
+STL,Shortstop,73,185,26.46
+STL,Shortstop,71,181,39.46
+TOR,Outfielder,73,178,31.6
+NYM,Second Base,72,175,25.08
+TOR,Pitcher,65,166,30.43
+NYM,Second Base,76,193,26.85
+BOS,Shortstop,72,184,30.64
+BAL,Pitcher,72,183,22.51
+BOS,Catcher,79,200,22.65
+SFG,Shortstop,75,187,22.87
+BAL,Catcher,67,169,38.8
+STL,Third Base,65,157,34.66
+LAD,Second Base,72,184,23.25
+CHC,First Base,67,165,23.77
+NYM,Outfielder,67,162,34.62
+TOR,Shortstop,65,164,23.12
+ATL,Catcher,75,182,24.69
+STL,Pitcher,69,169,39.27
+CHC,Second Base,74,183,25.11
+TOR,Pitcher,71,179,33.23
+CHC,Shortstop,74,185,39.57
+LAD,First Base,73,186,27.49
+HOU,Shortstop,76,191,20.35
+STL,First Base,71,179,24.88
+HOU,Shortstop,73,178,36.62
+HOU,First Base,72,184,37.29
+TOR,Shortstop,76,192,35.37
+STL,Pitcher,66,162,22.26
+LAD,Third Base,65,163,35.91
+BAL,Outfielder,80,197,38.37
+STL,Pitcher,71,178,32.01
+NYM,Outfielder,71,173,38.82
+CHC,First Base,78,199,36.54
+STL,First Base,72,180,33.34
+LAD,Outfielder,69,169,31.54
+NYM,Shortstop,67,164,26.97
+LAD,Shortstop,76,193,23.19
+HOU,Pitcher,72,181,32.1
+ATL,Pitcher,70,174,26.36
+BOS,Third Base,75,191,37.33
+LAD,Second Base,67,168,39.87
+TOR,Third Base,65,165,35.05
+NYM,First Base,67,162,21.81
+STL,Catcher,69,173,25.77
+CHC,Pitcher,79,197,22.18
+LAD,Second Base,78,199,33.01
+SFG,Catcher,67,170,35.3
+ATL,Third Base,65,157,38.51
+CHC,Shortstop,69,170,28.76
+BAL,First Base,74,188,38.03
+NYM,Catcher,71,175,37.56
+BAL,Pitcher,79,201,26.34
+ATL,Third Base,78,192,37.38
+TOR,Catcher,71,180,27.51
+BOS,First Base,75,183,25.94
+BOS,First Base,73,180,32.98
+BAL,Pitcher,79,197,26.57
+LAD,Outfielder,79,193,32.6
+BAL,Catcher,74,187,32.2
+LAD,Pitcher,74,187,31.27
+HOU,Shortstop,76,185,27.61
+LAD,First Base,77,189,30.97
+ATL,Outfielder,67,171,31.93
+BOS,Outfielder,79,200,30.91
+LAD,Second Base,80,199,28.89
+BOS,Third Base,71,177,20.29
+CHC,Pitcher,65,160,31.74
+NYM,Shortstop,68,174,23.37
+CHC,Shortstop,77,188,32.85
+STL,First Base,80,202,35.19
+LAD,Outfielder,68,170,30.01
+BAL,Pitcher,78,194,30.85
+TOR,Third Base,69,175,39.03
+LAD,Outfielder,71,172,36.94
+ATL,Outfielder,71,176,38.28
+BOS,Outfielder,77,192,36.28
+LAD,Catcher,79,196,22.18
+SFG,Pitcher,75,187,22.98
+TOR,Second Base,77,192,30.53
+NYM,Pitcher,68,171,24.92
+TOR,Second Base,77,190,29.53
+CHC,Third Base,80,202,27.89
+NYM,Second Base,71,178,30.99
+LAD,Pitcher,75,190,34.94
+NYM,Shortstop,67,168,34.31
+BAL,Outfielder,70,172,30.42
+LAD,Shortstop,76,187,36.45
+LAD,Shortstop,66,167,28.62
+LAD,Pitcher,74,184,37.93
+NYM,First Base,77,190,21.43
+STL,Shortstop,78,197,39.09
+BAL,First Base,73,182,33.09
+SFG,Shortstop,69,168,27.6
+SFG,Pitcher,70,173,23.94
+STL,Pitcher,76,188,29.58
+LAD,Pitcher,76,190,23.89
+STL,Third Base,76,190,23.33
+BOS,Catcher,76,185,32.35
+SFG,Shortstop,68,172,30.46
+CHC,Third Base,78,195,33.4
+TOR,Outfielder,78,192,38.59
+LAD,Shortstop,75,190,30.65
+HOU,Pitcher,80,196,31.62
+SFG,Catcher,74,187,21.79
+STL,Catcher,71,181,34.35
+HOU,Third Base,76,187,28.0
+LAD,Outfielder,73,181,39.53
+HOU,Shortstop,71,177,36.46
+NYM,Second Base,78,199,30.45
+TOR,Outfielder,65,162,22.46
+HOU,Shortstop,65,160,37.19
+SFG,Outfielder,73,179,36.0
+BOS,Shortstop,75,185,23.69
+LAD,Second Base,78,190,25.91
+NYM,Outfielder,73,180,35.87
+BOS,Second Base,68,165,23.7
+STL,Second Base,77,187,38.36
+BOS,Second Base,73,186,28.49
+NYM,First Base,67,167,21.74
+LAD,Shortstop,71,176,36.31
+TOR,First Base,70,173,27.47
+BAL,Shortstop,72,177,30.53
+NYM,Third Base,75,182,22.25
+NYM,First Base,73,182,20.05
+STL,Catcher,78,191,32.76
+STL,Catcher,69,174,30.3
+STL,Second Base,65,166,31.87
+BAL,Catcher,67,166,35.87
+TOR,First Base,74,186,32.93
+STL,Catcher,76,194,23.5
+SFG,Outfielder,72,176,27.22
+NYM,Pitcher,79,199,38.12
+SFG,Second Base,75,183,35.4
+NYM,Pitcher,70,173,31.13
+HOU,Third Base,80,195,25.11
+TOR,Catcher,80,199,26.04
+BOS,Pitcher,72,183,34.64
+LAD,First Base,73,177,37.02
+CHC,First Base,68,173,33.43
+HOU,Second Base,65,164,36.19
+ATL,Shortstop,78,195,35.33
+LAD,Shortstop,65,163,22.99
+SFG,Pitcher,74,182,28.48
+BAL,First Base,68,165,23.06
+BOS,Third Base,76,189,24.7
+CHC,Catcher,78,191,37.39
+CHC,Outfielder,71,176,29.46
+HOU,First Base,66,167,30.71
+STL,Third Base,67,170,23.57
+ATL,First Base,65,158,26.25
+BOS,Pitcher,69,169,24.6
+TOR,Second Base,65,159,24.12
+BAL,Pitcher,72,175,32.76
+TOR,First Base,65,164,25.14
+LAD,Outfielder,75,187,32.64
+BOS,Outfielder,65,164,21.17
+BOS,Outfielder,66,168,22.84
+STL,Third Base,66,164,25.49
+ATL,Outfielder,76,187,31.94
+BAL,Shortstop,70,174,33.52
+TOR,Outfielder,71,176,28.85
+HOU,Second Base,69,171,28.92
+SFG,Shortstop,80,197,34.49
+SFG,First Base,65,166,20.32
+LAD,Outfielder,65,160,26.82
+TOR,Third Base,67,170,36.37
+BOS,Shortstop,78,199,32.06
+TOR,First Base,66,168,26.74
+STL,First Base,69,168,38.11
+HOU,Second Base,76,192,35.45
+HOU,Outfielder,74,187,25.3
+HOU,Catcher,80,201,32.91
+STL,Outfielder,70,177,31.92
+HOU,Catcher,80,197,28.02
+TOR,Shortstop,71,177,27.34
+NYM,Shortstop,68,165,26.87
+ATL,First Base,71,178,32.34
+LAD,Second Base,75,182,28.85
+CHC,Outfielder,72,183,36.64
+LAD,First Base,75,182,33.39
+BAL,Pitcher,65,157,21.4
+BAL,Outfielder,79,198,32.8
+HOU,Shortstop,70,171,25.42
+BAL,Pitcher,72,179,31.86
+STL,Catcher,69,174,33.6
+TOR,Pitcher,68,172,24.62
+CHC,First Base,66,162,29.14
+HOU,Third Base,70,176,23.81
+BOS,Third Base,70,172,21.05
+NYM,Third Base,75,187,27.57
+BAL,Third Base,79,197,27.26
+SFG,Pitcher,80,197,39.91
+NYM,Shortstop,80,201,28.93
+LAD,Shortstop,65,159,26.67
+STL,First Base,73,184,31.61
+BOS,Outfielder,76,194,21.78
+BOS,Outfielder,75,185,39.23
+TOR,Third Base,70,170,32.7
+TOR,Shortstop,80,198,35.1
+STL,Second Base,77,193,23.41
+SFG,Pitcher,67,165,28.19
+TOR,Third Base,68,170,28.45
+NYM,Catcher,76,193,36.44
+SFG,Pitcher,75,182,20.02
+HOU,First Base,68,169,26.02
+BOS,Second Base,67,168,39.62
+HOU,Third Base,74,180,29.5
+NYM,Pitcher,67,165,27.65
+HOU,First Base,79,197,22.4
+BOS,Catcher,67,163,39.48
+ATL,Third Base,68,174,20.4
+CHC,Outfielder,80,199,34.74
+SFG,Pitcher,71,181,35.37
+BAL,Third Base,68,165,24.87
+NYM,First Base,73,182,33.43
+STL,First Base,65,162,21.86
+BAL,Shortstop,72,178,25.14
+ATL,Pitcher,80,202,35.76
+SFG,Pitcher,71,175,37.29
+SFG,Catcher,66,167,32.17
+BOS,Catcher,72,182,30.14
+SFG,Third Base,65,161,23.19
+NYM,Pitcher,75,185,21.26
+SFG,Third Base,76,186,22.35
+STL,Outfielder,73,179,24.55
+CHC,Catcher,73,179,26.83
+BAL,Pitcher,66,163,27.62
+ATL,Second Base,71,175,26.93
+SFG,Second Base,79,201,24.78
+TOR,Pitcher,78,194,30.19
+STL,First Base,74,183,36.51
+TOR,Catcher,67,171,25.59
+BAL,Shortstop,71,179,38.85
+STL,Third Base,76,190,37.47
+HOU,Shortstop,80,200,23.24
+STL,Outfielder,74,187,35.73
+BOS,Shortstop,80,201,31.49
+TOR,Outfielder,73,186,31.33
+LAD,First Base,68,174,27.82
+HOU,Third Base,76,192,30.02
+HOU,Shortstop,65,158,27.94
+BOS,Pitcher,66,168,30.79
+LAD,Catcher,65,157,32.56
+BOS,Shortstop,80,202,33.49
+ATL,Outfielder,78,193,30.65
+STL,First Base,76,188,34.43
+SFG,Pitcher,69,171,22.83
+NYM,Third Base,69,174,24.24
+BOS,Second Base,80,199,36.37
+HOU,Shortstop,75,189,26.45
+CHC,Shortstop,71,181,20.46
+CHC,Outfielder,73,177,23.08
+HOU,Third Base,73,186,24.47
+HOU,Catcher,67,170,39.15
+HOU,Third Base,67,167,31.46
+TOR,First Base,80,197,38.65
+CHC,Second Base,80,202,31.5
+NYM,Shortstop,67,170,29.59
+SFG,Catcher,68,170,26.27
+BAL,First Base,72,181,32.13
+HOU,First Base,70,170,22.78
+NYM,Third Base,72,179,37.97
+BAL,Catcher,65,161,36.59
+SFG,Third Base,72,184,26.35
+LAD,First Base,68,168,39.06
+STL,Second Base,75,187,36.5
+STL,Outfielder,65,163,33.33
+ATL,Third Base,72,183,22.44
+HOU,Second Base,68,165,29.56
+TOR,Outfielder,70,175,30.12
+LAD,First Base,72,181,24.65
+NYM,Shortstop,68,167,21.6
+NYM,Second Base,78,197,35.53
+STL,First Base,67,166,22.44
+STL,First Base,80,203,31.89
+SFG,Third Base,78,194,38.73
+SFG,Second Base,73,185,37.52
+BAL,Outfielder,67,171,25.56
+TOR,Second Base,73,180,37.03
+CHC,Third Base,77,195,20.01
+TOR,Shortstop,66,164,20.35
+SFG,Outfielder,80,204,32.05
+CHC,First Base,78,198,27.3
+BOS,Catcher,66,162,27.73
+CHC,First Base,66,163,31.29
+CHC,Outfielder,70,178,23.84
+STL,Shortstop,67,171,24.24
+LAD,First Base,80,200,29.69
+LAD,First Base,77,188,35.09
+NYM,Pitcher,73,183,32.39
+BAL,First Base,68,166,25.95
+BOS,Third Base,65,158,28.61
+BOS,Pitcher,68,165,23.41
+SFG,Second Base,65,159,21.49
+LAD,Shortstop,78,195,35.65
+ATL,Outfielder,69,174,25.31
+STL,Catcher,80,203,23.56
+HOU,Third Base,68,171,33.83
+STL,Third Base,72,178,32.36
+SFG,Catcher,80,200,32.66
+STL,First Base,72,179,24.58
+ATL,Shortstop,71,179,24.65
+STL,Second Base,67,162,24.42
+SFG,Second Base,65,157,23.48
+BAL,First Base,80,200,33.11
+ATL,Catcher,65,166,36.96
+STL,Shortstop,80,196,34.49
+BOS,First Base,76,189,35.84
+HOU,Catcher,75,182,28.1
+NYM,Third Base,67,168,33.08
+ATL,First Base,70,170,27.08
+BAL,Third Base,71,175,30.51
+SFG,Pitcher,70,178,29.63
+BAL,Outfielder,78,190,23.54
+BOS,Second Base,78,193,27.74
+CHC,Pitcher,70,175,39.28
+BAL,First Base,70,175,24.97
+STL,Catcher,77,194,22.68
+CHC,Third Base,67,162,28.37
+HOU,Second Base,70,176,35.81
+NYM,Outfielder,72,175,31.64
+HOU,Outfielder,75,188,33.62
+NYM,Catcher,75,184,23.79
+HOU,Catcher,66,167,32.38
+LAD,Shortstop,69,169,26.47
+STL,Second Base,78,190,36.69
+NYM,Third Base,65,164,32.59
+HOU,Shortstop,76,187,23.98
+STL,Third Base,79,193,21.29
+NYM,Pitcher,80,195,20.85
+STL,Shortstop,65,159,27.43
+CHC,Catcher,69,168,25.32
+STL,Second Base,76,186,32.92
+TOR,Outfielder,77,192,29.99
+LAD,Outfielder,80,195,25.32
+STL,First Base,67,163,22.98
+ATL,First Base,68,170,22.54
+TOR,Third Base,67,164,37.29
+CHC,First Base,80,198,24.87
+TOR,Third Base,65,157,33.03
+SFG,Outfielder,80,202,36.21
+SFG,Outfielder,65,163,32.28
+SFG,Second Base,76,191,37.19
+CHC,Third Base,76,187,27.85
+BAL,Third Base,78,199,39.12
+BAL,Second Base,77,196,22.66
+CHC,Outfielder,78,192,22.04
+STL,Outfielder,69,168,33.17
+BAL,Pitcher,70,170,38.86
+BAL,Outfielder,67,168,36.18
+CHC,Third Base,76,191,21.53
+SFG,Third Base,73,178,25.59
+SFG,Shortstop,69,173,38.61
+NYM,Third Base,72,182,25.06
+STL,Second Base,77,187,35.62
+SFG,Pitcher,65,165,36.5
+STL,Outfielder,78,196,29.91
+STL,Second Base,69,169,27.73
+HOU,First Base,79,199,29.0
+BOS,Catcher,67,168,24.54
+LAD,Second Base,76,192,37.79
+SFG,Third Base,65,162,29.01
+TOR,Outfielder,68,173,37.65
+ATL,Outfielder,79,196,22.11
+ATL,Second Base,77,189,39.77
+NYM,First Base,69,169,28.87
+STL,Catcher,80,195,20.96
+CHC,First Base,71,179,20.76
+LAD,Outfielder,65,158,34.92
+STL,First Base,80,197,33.18
+SFG,Second Base,67,169,36.04
+TOR,Catcher,80,202,22.11
+SFG,Catcher,66,163,20.71
+SFG,Catcher,73,180,30.17
+ATL,Outfielder,74,184,27.75
+BOS,Third Base,79,197,29.24
+SFG,Catcher,70,174,39.83
+TOR,Shortstop,74,186,39.41
+ATL,First Base,67,163,38.85
+LAD,Pitcher,72,181,35.68
+ATL,Pitcher,78,199,27.1
+ATL,Catcher,72,181,28.24
+BOS,Catcher,66,160,30.99
+SFG,Outfielder,80,201,36.61
+LAD,Shortstop,79,196,21.37
+NYM,Third Base,70,172,28.49
+LAD,Third Base,71,174,21.65
+BOS,First Base,66,163,30.29
+ATL,Catcher,79,193,37.98
+TOR,Third Base,75,183,35.65
+ATL,Pitcher,74,180,24.56
+NYM,Pitcher,66,164,39.52
+BAL,Second Base,74,183,33.35
+NYM,Outfielder,65,166,20.21
+NYM,Shortstop,72,176,25.11
+CHC,First Base,65,159,25.21
+BOS,Third Base,73,183,21.39
+ATL,Third Base,75,188,39.2
+NYM,Second Base,70,173,29.57
+HOU,Outfielder,80,199,37.92
+BOS,Catcher,71,176,26.44
+NYM,Pitcher,77,192,22.5
+TOR,Third Base,74,188,29.49
+NYM,Shortstop,71,173,22.28
+ATL,Outfielder,74,184,29.72
+BOS,First Base,67,164,38.41
+HOU,First Base,66,163,30.42
+ATL,Catcher,73,186,32.33
+ATL,Third Base,72,180,23.13
+BAL,Catcher,77,194,20.87
+BAL,Shortstop,76,185,22.22
+NYM,Outfielder,74,189,31.97
+STL,Pitcher,71,179,21.9
+HOU,Shortstop,73,183,27.52
+BOS,Outfielder,68,165,31.0
+BAL,Pitcher,77,188,27.77
+CHC,Second Base,68,167,23.27
+STL,Second Base,65,157,25.48
+SFG,Outfielder,72,183,38.57
+HOU,First Base,80,202,33.52
+CHC,Second Base,78,191,29.92
+SFG,Shortstop,80,203,20.25
+LAD,Pitcher,78,196,39.85
+BAL,Outfielder,76,193,33.43
+CHC,Third Base,67,167,26.34
+LAD,Shortstop,71,177,37.59
+ATL,Third Base,79,195,25.17
+ATL,Catcher,76,194,30.88
+HOU,Second Base,66,169,32.72
+BAL,First Base,66,161,24.42
+TOR,Shortstop,80,201,39.57
+TOR,Third Base,71,176,34.96
+BAL,Shortstop,79,197,31.16
+BOS,Third Base,70,171,23.61
+TOR,Catcher,67,166,21.08
+HOU,Third Base,73,186,26.4
+SFG,Catcher,74,183,35.06
+TOR,Outfielder,79,200,25.39
+TOR,First Base,78,195,30.79
+SFG,Second Base,77,188,34.56
+LAD,Catcher,70,170,22.16
+SFG,Second Base,74,184,33.71
+HOU,Catcher,74,188,21.84
+STL,Third Base,70,175,39.3
+BAL,Pitcher,65,166,29.77
+TOR,Catcher,68,171,23.01
+SFG,Third Base,74,184,26.85
+NYM,Second Base,70,179,28.27
+SFG,Catcher,79,197,35.16
+LAD,Pitcher,70,174,34.87
+TOR,Second Base,75,190,32.24
+NYM,Shortstop,76,190,22.12
+TOR,Second Base,69,174,23.03
+CHC,Outfielder,65,158,21.88
+LAD,Shortstop,72,183,31.54
+STL,Second Base,69,171,37.54
+LAD,Pitcher,76,191,28.68
+BAL,First Base,76,194,23.22
+ATL,Third Base,76,185,31.16
+STL,Catcher,69,176,36.24
+BAL,Outfielder,71,176,34.83
+TOR,Pitcher,68,174,37.63
+SFG,Catcher,70,171,25.56
+BAL,Second Base,77,192,23.88
+LAD,Pitcher,80,195,37.6
+TOR,Catcher,68,167,33.15
+BOS,Shortstop,78,194,26.22
+HOU,Second Base,79,195,34.85
+SFG,First Base,67,164,36.3
+CHC,Outfielder,71,181,32.3
+NYM,Third Base,72,179,33.76
+ATL,Shortstop,68,172,27.51
+SFG,Third Base,80,198,30.77
+BAL,Pitcher,77,187,30.48
+HOU,Pitcher,66,166,36.96
+ATL,Pitcher,76,192,36.8
+STL,First Base,74,182,36.65
+ATL,Third Base,78,195,20.22
+HOU,Pitcher,67,163,34.99
+NYM,Second Base,65,163,35.17
+SFG,Outfielder,72,182,33.57
+BAL,Pitcher,79,197,35.13
+BOS,Third Base,67,167,36.84
+NYM,Shortstop,76,189,29.41
+HOU,First Base,74,187,30.04
+BAL,Shortstop,71,172,22.49
+CHC,Shortstop,74,189,27.71
+BOS,First Base,69,170,32.87
+CHC,Outfielder,74,183,35.61
+ATL,Catcher,69,169,24.34
+TOR,Second Base,78,192,22.76
+CHC,Outfielder,71,175,33.26
+CHC,Second Base,79,192,20.04
+CHC,Shortstop,73,178,23.57
+HOU,Outfielder,76,193,20.58
+SFG,Shortstop,69,176,23.34
+TOR,Pitcher,65,158,23.63
+NYM,Third Base,74,184,27.75
+HOU,Third Base,74,188,28.05
+SFG,Pitcher,65,165,37.49
+STL,First Base,79,199,30.2
+NYM,Shortstop,66,160,34.47
+NYM,Shortstop,80,195,22.08
+BOS,Second Base,78,198,24.51
+TOR,Third Base,70,177,34.06
+ATL,Pitcher,80,204,21.06
+BAL,Second Base,73,185,29.73
+BAL,Second Base,72,181,31.99
+HOU,Catcher,77,189,32.04
+LAD,Shortstop,69,169,20.46
+HOU,Pitcher,65,158,26.44
+HOU,First Base,80,199,32.73
+BOS,Pitcher,77,189,22.98
+CHC,Catcher,71,177,33.91
+HOU,First Base,80,196,34.92
+ATL,Pitcher,79,194,39.64
+LAD,Second Base,69,171,24.2
+BAL,Outfielder,70,170,36.5
+STL,Pitcher,77,187,30.41
+CHC,Catcher,71,181,27.47
+LAD,Third Base,67,170,22.45
+ATL,Second Base,76,191,34.71
+BAL,Shortstop,74,180,24.72
+NYM,First Base,80,202,27.43
+TOR,Second Base,67,164,21.25
+CHC,Outfielder,69,174,36.03
+ATL,Pitcher,70,174,35.33
+ATL,Catcher,73,177,34.67
+LAD,Second Base,77,193,25.99
+HOU,Third Base,78,194,23.47
+ATL,Second Base,76,190,32.75
+LAD,First Base,69,172,29.92
+ATL,Catcher,79,199,23.57
+LAD,Outfielder,65,165,33.72
+HOU,First Base,78,191,39.82
+TOR,Shortstop,78,198,34.94
+NYM,First Base,78,199,34.8
+TOR,Third Base,68,173,39.01
+ATL,Catcher,69,176,24.06
+TOR,Third Base,76,194,31.31
+STL,Second Base,80,201,39.59
+LAD,Third Base,74,180,23.31
+STL,Second Base,74,186,34.01
+ATL,Pitcher,80,204,31.72
+CHC,Pitcher,69,171,31.73
+HOU,Third Base,71,177,33.95
+HOU,First Base,68,174,38.59
+BOS,Catcher,65,163,35.65
+TOR,Catcher,78,194,21.12
+STL,Second Base,78,196,37.05
+NYM,Third Base,69,175,24.51
+SFG,Catcher,71,174,27.54
+STL,Second Base,74,187,29.23
+STL,Pitcher,74,181,29.62
+HOU,Shortstop,70,176,28.7
+ATL,First Base,69,168,38.75
+BAL,Pitcher,68,168,34.12
+STL,Catcher,66,166,32.62
+NYM,Outfielder,68,167,21.0
+HOU,Pitcher,79,193,38.08
+SFG,Third Base,74,189,38.19
+BOS,First Base,74,186,35.6
+HOU,First Base,67,162,20.14
+STL,Second Base,74,187,21.15
+ATL,First Base,80,197,24.5
+STL,First Base,65,158,22.63
+NYM,First Base,72,177,27.98
+BOS,Shortstop,69,171,38.45
+SFG,Pitcher,77,194,29.44
+BOS,Pitcher,68,174,20.27
+BAL,Outfielder,80,201,25.65
+BOS,Shortstop,72,181,20.89
+NYM,Second Base,80,201,20.73
+ATL,Outfielder,71,179,25.51
+SFG,Shortstop,66,160,25.51
+BAL,Third Base,65,160,35.74
+SFG,Third Base,76,190,39.5
+HOU,Outfielder,80,203,27.42
+STL,Second Base,80,196,28.58
+BAL,Pitcher,75,182,36.9
+NYM,Catcher,68,174,25.36
+STL,Catcher,72,176,23.13
+STL,First Base,76,191,37.06
+STL,Third Base,66,162,20.93
+TOR,Shortstop,67,171,32.39
+BOS,Third Base,76,186,31.24
+HOU,Pitcher,65,163,26.92
+NYM,Outfielder,65,158,26.3
+LAD,Shortstop,77,189,35.44
+LAD,Shortstop,67,168,21.73
+HOU,Shortstop,75,185,24.74
+BAL,Shortstop,69,167,34.65
+CHC,Pitcher,76,189,30.97
+NYM,Outfielder,67,170,22.56
+LAD,Shortstop,65,164,37.64
+STL,Shortstop,65,165,27.87
+LAD,Shortstop,72,184,36.56
+BAL,Third Base,74,188,35.75
+TOR,Outfielder,75,188,32.49
+STL,Pitcher,76,188,29.89
+STL,Catcher,77,191,39.59
+CHC,Shortstop,77,187,22.9
+HOU,Pitcher,76,185,34.5
+BOS,Shortstop,79,194,23.82
+STL,Second Base,78,197,26.77
+LAD,First Base,66,161,26.17
+LAD,Third Base,77,190,38.94
+TOR,Third Base,67,163,39.35
+HOU,Catcher,66,164,23.66
+ATL,Third Base,67,170,20.44
+TOR,Shortstop,71,172,34.4
+SFG,Shortstop,65,161,28.36
+CHC,Shortstop,74,188,21.78
+STL,Shortstop,72,175,33.68
+STL,Third Base,77,195,30.9
+NYM,Catcher,74,187,39.61
+STL,Catcher,74,183,24.55
+STL,Outfielder,74,189,28.08
+BAL,Second Base,78,194,30.85
+LAD,Catcher,66,164,35.83
+STL,Outfielder,67,167,30.98
+STL,Shortstop,73,183,32.26
+ATL,Catcher,71,179,24.52
+STL,First Base,68,172,36.94
+SFG,First Base,74,181,28.57
+SFG,Shortstop,69,175,22.82
+TOR,Shortstop,66,166,33.28
+LAD,Catcher,77,190,24.32
+ATL,Catcher,75,185,21.95
+TOR,Catcher,77,194,37.24
+ATL,Third Base,72,178,29.2
+BAL,Third Base,68,170,34.99
+HOU,Outfielder,73,181,25.81
+TOR,Outfielder,69,169,35.74
+TOR,First Base,77,196,22.24
+CHC,Third Base,73,178,27.12
+BOS,Second Base,68,173,39.56
+CHC,Third Base,74,189,35.88
+BAL,Second Base,69,175,29.95
+TOR,Catcher,73,177,26.8
+LAD,First Base,72,184,37.44
+ATL,Outfielder,80,197,30.9
+SFG,Catcher,67,169,35.17
+LAD,Pitcher,65,162,35.08
+CHC,Shortstop,67,166,20.36
+STL,First Base,80,199,22.53
+BAL,Pitcher,68,170,33.19
+ATL,First Base,66,166,23.23
+STL,Shortstop,65,157,25.11
+BAL,Third Base,71,180,38.93
+TOR,Outfielder,80,197,31.2
+ATL,Third Base,72,178,35.01
+NYM,Second Base,71,181,31.16
+HOU,Second Base,78,190,31.05
+NYM,Catcher,80,204,21.88
+CHC,Shortstop,69,169,26.87
+LAD,Third Base,76,186,25.65
+STL,First Base,65,158,27.81
+NYM,Third Base,71,172,35.97
+ATL,Third Base,77,194,27.44
+BAL,Third Base,71,174,29.03
+BAL,First Base,73,179,27.95
+BAL,Catcher,67,167,21.87
+TOR,Catcher,73,184,28.82
+NYM,Outfielder,78,198,23.91
+STL,Catcher,65,165,23.73
+SFG,Outfielder,65,160,21.88
+NYM,Outfielder,78,194,27.13
+ATL,Outfielder,68,166,35.15
+NYM,Pitcher,80,203,25.53
+LAD,Second Base,73,184,26.25
+NYM,Pitcher,70,172,32.85
+STL,Pitcher,77,195,23.92
+BOS,Outfielder,75,184,37.94
+NYM,Second Base,67,170,30.4
+HOU,Shortstop,65,158,28.95
+CHC,Second Base,68,174,31.16
+NYM,Catcher,76,193,23.32
+NYM,First Base,77,194,32.27
+ATL,Outfielder,73,185,27.26
+STL,First Base,67,166,37.94
+HOU,Catcher,76,186,23.38
+STL,Third Base,73,184,30.14
+CHC,Catcher,71,177,31.96
+NYM,Catcher,76,192,20.67
+LAD,First Base,78,194,27.27
+ATL,First Base,79,201,34.65
+TOR,Catcher,80,196,36.41
+BAL,First Base,68,170,26.26
+HOU,Shortstop,67,166,35.97
+BOS,Pitcher,74,184,39.36
+CHC,Shortstop,79,192,37.14
+TOR,First Base,80,196,22.35
+LAD,Shortstop,69,174,34.79
+CHC,Third Base,69,169,26.39
+SFG,Catcher,67,171,39.77
+TOR,First Base,76,187,29.71
+BOS,Outfielder,73,184,22.45
+NYM,Pitcher,68,172,34.5
+SFG,Second Base,75,183,26.46
+TOR,First Base,69,174,39.94
+BOS,Third Base,68,165,39.6
+BAL,First Base,69,172,33.12
+NYM,Pitcher,71,179,22.6
+LAD,Outfielder,80,197,33.74
+ATL,Third Base,73,184,21.86
+ATL,Catcher,71,172,20.59
+NYM,Third Base,77,195,36.46
+BAL,Third Base,69,175,24.2
+STL,Third Base,74,184,27.58
+ATL,Shortstop,74,189,39.47
+STL,First Base,71,175,26.74
+TOR,Third Base,78,195,25.93
+LAD,Second Base,79,198,38.36
+SFG,Second Base,74,184,22.21
+CHC,Outfielder,69,176,35.19
+ATL,Outfielder,67,170,39.76
+TOR,Pitcher,71,174,38.03
+LAD,Catcher,77,193,33.03
+LAD,Pitcher,75,191,26.28
+BOS,Shortstop,75,191,25.09
+ATL,Catcher,66,164,36.39
+HOU,Shortstop,79,198,37.6
+STL,Outfielder,76,186,30.51
+TOR,Catcher,73,180,24.89
+TOR,Third Base,74,181,22.26
+BOS,Outfielder,74,186,21.74
+LAD,Shortstop,76,186,34.38
+ATL,First Base,65,157,28.4
+BAL,First Base,77,195,38.11
+BAL,Pitcher,70,170,34.79
+BAL,Third Base,71,179,23.83
+NYM,Shortstop,78,191,32.28
+ATL,Outfielder,77,194,28.71
+LAD,Shortstop,72,177,31.54
+LAD,First Base,74,185,34.76
+CHC,Pitcher,73,179,36.12
+NYM,Catcher,66,166,36.87
+BOS,First Base,75,191,25.08
+BOS,First Base,74,188,20.62
+CHC,Shortstop,66,161,34.79
+STL,Shortstop,69,171,22.13
+BOS,Catcher,77,192,26.3
+NYM,Catcher,69,170,20.08
+ATL,Catcher,70,173,33.63
+HOU,Shortstop,67,165,23.34
+NYM,Third Base,72,176,33.11
+CHC,First Base,80,198,39.83
+BAL,Shortstop,77,187,21.45
+NYM,First Base,65,162,21.54
+CHC,Second Base,70,170,26.81
+LAD,Second Base,68,174,37.33
+BOS,Outfielder,65,162,24.31
+STL,Shortstop,79,192,27.21
+ATL,Outfielder,71,177,21.37
+CHC,First Base,73,186,35.26
+CHC,Third Base,77,194,28.17
+TOR,Pitcher,68,166,35.18
+HOU,Catcher,68,166,38.07
+SFG,Outfielder,70,173,24.66
+SFG,Pitcher,76,187,36.15
+CHC,Catcher,79,195,21.18
+HOU,Shortstop,67,168,37.98
+SFG,Second Base,77,187,33.02
+LAD,First Base,76,190,37.48
+STL,Shortstop,70,172,20.0
+CHC,Second Base,71,181,23.38
+NYM,Third Base,75,188,27.8
+CHC,Catcher,74,189,27.59
+NYM,Second Base,74,181,24.53
+CHC,Second Base,67,163,27.63
+SFG,First Base,71,175,22.58
+STL,Shortstop,78,190,28.26
+HOU,Shortstop,67,164,36.05
+ATL,Shortstop,77,195,29.58
+STL,Pitcher,77,193,20.36
+BAL,Third Base,66,166,28.43
+HOU,Shortstop,76,188,20.54
+BAL,Pitcher,78,191,39.32
+HOU,Catcher,74,183,22.55
+LAD,Catcher,68,170,34.15
+NYM,Shortstop,76,187,39.46
+CHC,Pitcher,72,175,36.52
+CHC,First Base,77,194,33.99
+STL,Third Base,79,196,36.79
+BOS,First Base,73,181,39.64
+HOU,First Base,71,175,32.43
+NYM,First Base,65,162,31.18
+NYM,Pitcher,67,164,32.56
+ATL,Second Base,77,195,30.65
+ATL,Catcher,76,189,32.7
+TOR,Catcher,78,192,29.0
+TOR,Shortstop,73,177,24.37
+BAL,Pitcher,79,201,22.4
+ATL,Third Base,76,190,21.37
+STL,Catcher,65,158,25.27
+STL,Third Base,73,179,20.92
+TOR,Outfielder,72,175,31.34
+NYM,Third Base,65,165,25.68
+CHC,Second Base,70,177,36.49
+ATL,Second Base,69,168,21.48
+LAD,First Base,70,177,24.53
+SFG,Second Base,74,188,34.6
+STL,First Base,76,185,31.98
+NYM,Outfielder,77,191,21.29
+BAL,Second Base,80,202,37.54
+TOR,Second Base,77,188,37.55
+HOU,First Base,77,190,26.61
+BOS,Shortstop,79,198,26.81
+ATL,Third Base,69,169,39.78
+ATL,Third Base,80,199,32.52
+BAL,Third Base,70,177,30.63
+SFG,Second Base,69,176,36.76
+SFG,Second Base,75,184,25.71
+LAD,Outfielder,76,188,28.58
+STL,Outfielder,69,175,25.36
+BOS,Outfielder,68,171,35.78
+CHC,Outfielder,67,162,31.47
+TOR,First Base,67,165,33.18
+HOU,Catcher,68,168,25.05
+LAD,Shortstop,73,185,24.4
+BAL,First Base,66,165,29.77
+LAD,Second Base,79,200,34.75
+BAL,First Base,73,182,30.5
+NYM,First Base,65,162,20.65
+LAD,Outfielder,78,194,37.37
+CHC,Outfielder,79,196,21.29
+TOR,First Base,79,193,39.12
+NYM,Third Base,65,164,20.5
+STL,Pitcher,69,174,33.89
+BOS,Third Base,70,170,21.64
+CHC,Outfielder,70,177,38.21
+CHC,Second Base,67,166,29.29
+BAL,First Base,80,196,22.75
+NYM,First Base,71,173,26.82
+SFG,Pitcher,73,182,23.3
+NYM,Shortstop,75,190,23.41
+STL,Second Base,76,185,38.96
+BAL,Shortstop,74,185,28.9
+ATL,Catcher,80,203,35.78
+NYM,Pitcher,80,202,32.79
+NYM,Pitcher,72,180,33.53
+LAD,Shortstop,70,172,22.63
+NYM,Second Base,76,192,24.68
+ATL,Second Base,72,183,35.74
+STL,Outfielder,76,185,39.42
+BOS,Catcher,69,175,25.25
+SFG,Shortstop,72,180,25.43
+ATL,Pitcher,74,185,29.46
+TOR,Second Base,76,188,39.68
+BOS,Third Base,68,165,25.38
+NYM,Pitcher,74,189,28.14
+TOR,Third Base,72,182,37.83
+BOS,Pitcher,74,181,20.06
+CHC,Pitcher,76,185,20.8
+CHC,First Base,66,161,32.08
+LAD,Pitcher,76,185,38.15
+BAL,Shortstop,76,185,24.78
+CHC,Second Base,69,175,29.39
+NYM,Second Base,73,177,29.01
+ATL,Pitcher,68,168,29.46
+BOS,First Base,80,204,32.45
+NYM,First Base,75,187,29.39

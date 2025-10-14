@@ -1,0 +1,25 @@
+// budget_tuples.dat
+
+// Dimensiones
+T             = 3;
+NbMustTakeOne = 1;
+
+// Lista de proyectos, con sus vectores de costes y rewards
+Projects = {
+  <"IBM_5500",    [4000, 4000, 4100], [1000, 3000, 3000]>,
+  <"Sun_2000",    [4500, 4500, 4500], [1200, 3200, 3200]>,
+  <"New_CFO",     [8000, 8000, 8000], [2000, 2000, 2000]>,
+  <"Promote_SW_Reg",[2000,2000,2000], [4000, 4000, 4000]>,
+  <"Stock_repur", [3500, 5000, 3000], [2000, 2000, 2000]>
+};
+
+// Grupo “must‐take‐one” (grupo 1: elegir uno de los dos)
+MustTakeOne = {
+  <1, "IBM_5500">,
+  <1, "Sun_2000">
+};
+
+// Parámetros financieros
+Rate     = 0.04;
+MinBal   = [0, 0, 0];
+InitBal  = 5000;

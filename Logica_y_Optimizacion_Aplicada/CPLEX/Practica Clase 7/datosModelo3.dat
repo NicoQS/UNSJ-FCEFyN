@@ -1,0 +1,11 @@
+Productos = {<amoniaco>, <cloruro_amonico>};
+Componentes = {<nitrogeno>, <hidrogeno>, <oxigeno>};
+ Demanda = { <amoniaco,nitrogeno,1>,
+			 <amoniaco,hidrogeno,3>,
+			 <amoniaco,oxigeno,0>,
+			 <cloruro_amonico,nitrogeno,1>,
+			 <cloruro_amonico,hidrogeno,4>,
+			 <cloruro_amonico,oxigeno,1>
+			 };
+Beneficio = {<amoniaco,40>,<cloruro_amonico, 50>};
+Stock = {<nitrogeno,50>,<hidrogeno,180>,<oxigeno, 40>};
