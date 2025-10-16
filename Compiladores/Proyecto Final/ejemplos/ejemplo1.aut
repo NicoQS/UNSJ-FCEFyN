@@ -4,6 +4,8 @@
 
 AUTOMATA AutomataDoscerosConsecutivos
 
+ALFABETO: "0", "1"
+
 ESTADOS: q0, q1, q2
 
 INICIAL: q0

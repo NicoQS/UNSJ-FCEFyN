@@ -4,15 +4,14 @@ echo   Compilador de Automatas - Build
 echo ========================================
 echo.
 
-REM Crear carpeta para archivos HTML generados
-if not exist htmls_generados (
-    mkdir htmls_generados
-    echo Carpeta htmls_generados creada
+REM Crear carpetas necesarias
+if not exist src (
+    mkdir src
+    echo Carpeta src creada
 ) else (
-    echo Carpeta htmls_generados ya existe
+    echo Carpeta src ya existe
 )
 
-REM Crear carpeta para el ejecutable de salida
 if not exist out (
     mkdir out
     echo Carpeta out creada
@@ -23,13 +22,13 @@ echo.
 
 REM Limpiar archivos generados anteriormente
 echo Eliminando archivos generados anteriormente...
-if exist Scanner.cs (
-    del Scanner.cs
-    echo    Scanner.cs eliminado
+if exist src\Scanner.cs (
+    del src\Scanner.cs
+    echo    src\Scanner.cs eliminado
 )
-if exist Parser.cs (
-    del Parser.cs
-    echo    Parser.cs eliminado
+if exist src\Parser.cs (
+    del src\Parser.cs
+    echo    src\Parser.cs eliminado
 )
 echo.
 
@@ -41,9 +40,19 @@ if not exist Coco.exe (
     exit /b 1
 )
 
+REM Verificar si existe el archivo de gramática
+if not exist grammar\Automata.atg (
+    echo ERROR: grammar\Automata.atg no encontrado
+    echo Por favor, asegurate de que el archivo de gramatica este en la carpeta grammar/
+    pause
+    exit /b 1
+)
+
 REM Paso 1: Generar Scanner y Parser
-echo [1/2] Generando Scanner.cs y Parser.cs con Coco/R...
-Coco.exe Automata.atg
+echo [1/3] Generando Scanner.cs y Parser.cs con Coco/R...
+REM Copiar gramática temporalmente a la raíz para Coco
+copy grammar\Automata.atg .\Automata_temp.atg
+Coco.exe Automata_temp.atg
 
 if errorlevel 1 (
     echo ERROR: Fallo al generar el scanner y parser
@@ -64,11 +73,20 @@ if not exist Parser.cs (
 )
 
 echo    OK - Scanner.cs y Parser.cs generados exitosamente
+REM Limpiar archivo temporal
+del Automata_temp.atg
 echo.
 
-REM Paso 2: Compilar con csc.exe
-echo [2/2] Compilando AutomataCompiler.exe...
-csc /out:out\AutomataCompiler.exe Program.cs Scanner.cs Parser.cs AutomataBuilder.cs AutomataVisualizador.cs SymTab.cs
+REM Paso 2: Mover archivos generados a src/
+echo [2/3] Moviendo archivos generados a src/...
+move Scanner.cs src\
+move Parser.cs src\
+echo    Archivos movidos a src/
+echo.
+
+REM Paso 3: Compilar con csc.exe
+echo [3/3] Compilando AutomataCompiler.exe...
+csc /out:out\AutomataCompiler.exe Program.cs src\Scanner.cs src\Parser.cs src\AutomataBuilder.cs src\AutomataVisualizador.cs src\TablaSimbolos.cs
 
 if errorlevel 1 (
     echo ERROR: Fallo la compilacion
@@ -85,8 +103,7 @@ echo   COMPILACION EXITOSA DEL GAF!
 echo ========================================
 echo.
 echo Presiona cualquier tecla para continuar...
-pause >nul
 echo Se ha generado: out\AutomataCompiler.exe
 echo.
-pause
+pause >nul
 exit /b 0

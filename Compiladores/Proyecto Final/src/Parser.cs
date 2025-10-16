@@ -20,6 +20,9 @@ public class Parser {
 	public Token la;   // lookahead token
 	int errDist = minErrDist;
 
+public TablaSimbolos tab;
+	public AutomataBuilder builder;
+
 
 
 	public Parser(Scanner scanner) {
@@ -80,16 +83,16 @@ public class Parser {
 
 	
 	void Automata() {
+		tab = new TablaSimbolos(); 
+		builder = new AutomataBuilder(); 
 		Expect(3);
 		Expect(1);
 		string nombreAutomata = t.val; 
-		AutomataBuilder.IniciarAutomata(nombreAutomata); 
-		if (la.kind == 4) {
-			Get();
-			Expect(5);
-			ListaSimbolos();
-			
-		}
+		builder.IniciarAutomata(nombreAutomata); 
+		Expect(4);
+		Expect(5);
+		ListaSimbolos();
+		
 		Expect(6);
 		Expect(5);
 		ListaEstados();
@@ -97,7 +100,7 @@ public class Parser {
 		Expect(7);
 		Expect(5);
 		Expect(1);
-		AutomataBuilder.DefinirEstadoInicial(t.val); 
+		builder.DefinirEstadoInicial(t.val); 
 		if (la.kind == 8) {
 			Get();
 			Expect(5);
@@ -109,55 +112,65 @@ public class Parser {
 		while (la.kind == 1) {
 			Transicion();
 		}
-		if (!AutomataBuilder.TieneTransiciones()) {
+		if (!builder.TieneTransiciones()) {
 		   SemErr("ERROR: El autÃ³mata debe tener al menos una transiciÃ³n."); 
 		} 
 		Expect(10);
-		AutomataBuilder.FinalizarConValidacion(); 
+		if (errors.count == 0) {
+		    builder.FinalizarConValidacion(); 
+		} else {
+		    builder.FinalizarSinVisualizacion();
+		} 
 	}
 
 	void ListaSimbolos() {
 		Expect(2);
 		string simbolo1 = t.val.Trim('"', '\'');
-		AutomataBuilder.AgregarSimbolo(simbolo1); 
+		tab.AgregarSimbolo(simbolo1);
+		builder.AgregarSimbolo(simbolo1); 
 		while (la.kind == 11) {
 			Get();
 			Expect(2);
 			string simbolo2 = t.val.Trim('"', '\''); 
-			AutomataBuilder.AgregarSimbolo(simbolo2); 
+			tab.AgregarSimbolo(simbolo2);
+			builder.AgregarSimbolo(simbolo2); 
 		}
 	}
 
 	void ListaEstados() {
 		Expect(1);
-		if (!AutomataBuilder.AgregarEstadoConValidacion(t.val)) {
+		if (tab.EstadoExiste(t.val)) {
 		  SemErr("ERROR: Estado duplicado: " + t.val);
+		} else {
+		  tab.AgregarEstado(t.val);
+		  builder.AgregarEstado(t.val);
 		} 
 		while (la.kind == 11) {
 			Get();
 			Expect(1);
-			if (!AutomataBuilder.AgregarEstadoConValidacion(t.val)) {
+			if (tab.EstadoExiste(t.val)) {
 			  SemErr("ERROR: Estado duplicado: " + t.val);
+			} else {
+			  tab.AgregarEstado(t.val);
+			  builder.AgregarEstado(t.val);
 			} 
 		}
 	}
 
 	void ListaEstadosFinales() {
 		Expect(1);
-		if (!AutomataBuilder.ValidarEstadoFinal(t.val)) {
+		if (!tab.EstadoExiste(t.val)) {
 		  SemErr("ERROR: Estado final no declarado: " + t.val);
 		} else {
-		  AutomataBuilder.AgregarEstado(t.val);
-		  AutomataBuilder.MarcarEstadoFinal(t.val);
+		  builder.MarcarEstadoFinal(t.val);
 		} 
 		while (la.kind == 11) {
 			Get();
 			Expect(1);
-			if (!AutomataBuilder.ValidarEstadoFinal(t.val)) {
+			if (!tab.EstadoExiste(t.val)) {
 			  SemErr("ERROR: Estado final no declarado: " + t.val);
 			} else {
-			  AutomataBuilder.AgregarEstado(t.val); 
-			  AutomataBuilder.MarcarEstadoFinal(t.val);
+			  builder.MarcarEstadoFinal(t.val);
 			} 
 		}
 	}
@@ -165,7 +178,7 @@ public class Parser {
 	void Transicion() {
 		Expect(1);
 		string estadoOrigen = t.val; 
-		if (!AutomataBuilder.ValidarEstadoTransicion(estadoOrigen)) {
+		if (!tab.EstadoExiste(estadoOrigen)) {
 		  SemErr("ERROR: Estado origen no declarado: " + estadoOrigen);
 		} 
 		if (la.kind == 12) {
@@ -176,7 +189,7 @@ public class Parser {
 		
 		Expect(1);
 		string estadoDestino = t.val; 
-		if (!AutomataBuilder.ValidarEstadoTransicion(estadoDestino)) {
+		if (!tab.EstadoExiste(estadoDestino)) {
 		  SemErr("ERROR: Estado destino no declarado: " + estadoDestino);
 		} 
 		if (la.kind == 14) {
@@ -189,20 +202,26 @@ public class Parser {
 		
 		Expect(2);
 		string simboloTrans = t.val.Trim('"', '\''); 
-		// Solo agregar la transiciÃ³n si ambos estados son vÃ¡lidos
-		if (AutomataBuilder.ValidarEstadoExiste(estadoOrigen) && AutomataBuilder.ValidarEstadoExiste(estadoDestino)) {
-		if (!AutomataBuilder.AgregarTransicionConValidacion(estadoOrigen, estadoDestino, simboloTrans)) {
+		string clave = estadoOrigen + "-" + simboloTrans;
+		if (tab.EstadoExiste(estadoOrigen) && tab.EstadoExiste(estadoDestino)) {
+		if (tab.TransicionExiste(clave)) {
 		   SemErr("ERROR: Transicion duplicada desde " + estadoOrigen + " con simbolo '" + simboloTrans + "'");
+		} else {
+		   tab.AgregarTransicion(clave, estadoDestino);
+		   builder.AgregarTransicion(estadoOrigen, estadoDestino, simboloTrans);
 		}
 		} 
 		while (la.kind == 11) {
 			Get();
 			Expect(2);
 			string simboloTrans2 = t.val.Trim('"', '\''); 
-			// Solo agregar la transiciÃ³n si ambos estados son vÃ¡lidos
-			if (AutomataBuilder.ValidarEstadoExiste(estadoOrigen) && AutomataBuilder.ValidarEstadoExiste(estadoDestino)) {
-			if (!AutomataBuilder.AgregarTransicionConValidacion(estadoOrigen, estadoDestino, simboloTrans2)) {
+			string clave2 = estadoOrigen + "-" + simboloTrans2;
+			if (tab.EstadoExiste(estadoOrigen) && tab.EstadoExiste(estadoDestino)) {
+			if (tab.TransicionExiste(clave2)) {
 			 SemErr("ERROR: Transicion duplicada desde " + estadoOrigen + " con simbolo '" + simboloTrans2 + "'");
+			} else {
+			 tab.AgregarTransicion(clave2, estadoDestino);
+			 builder.AgregarTransicion(estadoOrigen, estadoDestino, simboloTrans2);
 			}
 			} 
 		}

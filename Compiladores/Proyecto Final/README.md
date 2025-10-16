@@ -118,7 +118,7 @@ FIN
 
 1. **Palabras clave** (case-sensitive):
    - `AUTOMATA` - Declara el inicio del autómata
-   - `ALFABETO` - (Opcional) Define explícitamente el alfabeto
+   - `ALFABETO` - Define explícitamente el alfabeto
    - `ESTADOS` - Lista todos los estados
    - `INICIAL` - Define el estado inicial
    - `FINALES` - (Opcional) Lista los estados de aceptación
