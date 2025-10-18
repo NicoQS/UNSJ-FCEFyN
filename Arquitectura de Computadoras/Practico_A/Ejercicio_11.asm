@@ -1,0 +1,28 @@
+; Escribir el código en assembler del DLX con las directivas del programa ensamblador que ejecute la
+; siguiente tarea: generar un arreglo de datos en memoria a partir de la dirección 0x3500 con los valores
+; extraídos de un arreglo de datos de 200 elementos de 4 bytes cargado en memoria a partir de la dirección
+; 0x4500 y que cumplan con la condición de ser mayores o iguales a 350. Calcular la cantidad de datos
+; generados y guardar el resultado al final de la tabla. Cargar el código a partir de la dirección 100h.
+
+			.data 0x4500
+ai:			.word  0...200				; Aquí se deben definir o reservar los 200 elementos de memoria que se van a procesar.
+			.data 0x3500
+bi:			.space 804				; reserva de espacio para almacenar los elementos mayores o
+									; iguales a 350 (200*4=800 bytes + 4 bytes para almacenar la cantidad)
+			.text 0x100				; comienzo del código
+main:		ADDI r1, r0, #ai		; Coloca en r1 la dirección inicial del bloque de memoria
+			ADDI r2, r0, #200		; Inicializa el contador r2 con el valor 200
+			ADD r3, r0, r0			; Inicializa el acumulador r3 a 0
+			ADDI r4, r0, #350		; Inicializa el límite superior r4 con el valor 350
+			ADDI r5, r0, #bi		; Coloca en r5 la dirección de inicio para almacenar los resultados
+ITERA:		LW r6, 0(r1)			; Carga en r6 el valor almacenado en la dirección apuntada por r1
+			SLT r7, r6, r4			; Compara si r6 < 350 = r4, si es así r7 = 1, sino r7 = 0
+			BNEZ r7, PROX			; Si r7 != 0 (r6 < 350) salta a la etiqueta 'PROX'
+			SW 0(r5), r6			; Almacena el valor de r6 en la dirección apuntada por r5
+			ADDI r5, r5, #4			; Incrementa r5 en 4 para apuntar a la siguiente posición de almacenamiento
+			ADDI r3, r3, #1			; Incrementa el contador de elementos almacenados en r3
+PROX:		ADDI r1, r1, #4			; Incrementa r1 en 4 para apuntar al siguiente elemento
+			SUBI r2, r2, #1			; Decrementa el contador r2 en 1
+			BNEZ r2, ITERA			; Si r2 != 0, repite el ciclo
+			SW 0(r5), r3			; Almacena el número de elementos almacenados en r3
+			TRAP 0
