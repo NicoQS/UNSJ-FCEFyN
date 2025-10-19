@@ -1,0 +1,56 @@
+; Realice el seguimiento del siguiente código de programación en assembler del DLX para especificar cuál es
+; la tarea que realiza y agregue las directivas para el programa ensamblador.
+
+b) Determinar dónde se producen riesgos de datos y de control suponiendo que el diseño del uP no incluye
+anticipación (forwarding) o atajos o cortocircuitos. Determinar la cantidad y ubicación de las detenciones
+en el flujo de las instrucciones que debe efectuar el uP para resolver las dependencias de datos.
+c) Reordenar el código para tratar de reducir la cantidad de detenciones o bien eliminarlas.
+d) Desenrollar el bucle una cantidad de veces de manera de reducir la cantidad de detenciones o bien
+eliminarlas.
+
+1 		ADDI r1, r0, #0x5000	; Coloca en r1 la dirección inicial del bloque de memoria r1 = 0x5000
+2 		ADDI r2, r0, #150		; Inicializa el contador r2 con el valor 150 (número de elementos a procesar)
+3 		ADD r3, r0, r0			; Inicializa el acumulador r3 a 0
+4 		ADDI r4, r0, #40		; Inicializa el límite superior r4 con el valor 40
+5 		ADDI r5, r0, #0x4000	; Coloca en r5 la dirección de inicio para almacenar los resultados
+6 OTRO:	LW r6, 0(r1)			; Carga en r6 el valor almacenado en la dirección apuntada por r1
+7 		SLT r7, r6, r4			; Compara si r6 < 40 = r4, si es así r7 = 1, sino r7 = 0
+8 		BNEZ r7, PROX			; Si r7 != 0 (r6 < 40) salta a la etiqueta 'PROX'
+9 		SW 0(r5), r6			; Almacena el valor de r6 en la dirección apuntada por r5
+10 		ADDI r5, r5, #4			; Incrementa r5 en 4 para apuntar a la siguiente posición de almacenamiento
+11 		ADDI r3, r3, #1			; Incrementa el contador de elementos almacenados en r3
+12 PROX:	ADDI r1, r1, #4			; Incrementa r1 en 4 para apuntar al siguiente elemento
+13 		SUBI r2, r2, #1			; Decrementa el contador r2 en 1
+14 		BNEZ r2, OTRO			; Si r2 != 0, repite el ciclo
+15 		SW 0(r5), r3			; Almacena el número de elementos almacenados en r3
+16 		TRAP 0
+
+; Lo que realiza el programa es copiar todos los elementos de un bloque de memoria de 150 componentes que sean mayores o iguales a 40, a otra ubicación de memoria, y al final almacena en la siguiente posición libre la cantidad de elementos copiados.
+
+b) Riesgos de datos y de control:
+- Instrucción 7 (SLT r7, r6, r4) depende de la instrucción 6 (LW r6, 0(r1)) -> 2 ciclos de detención.
+- Instrucción 8 (BNEZ r7, PROX) depende de la instrucción 7 (SLT r7, r6, r4) -> 2 ciclos de detención.
+- Instrucción 14 (BNEZ r2, OTRO) depende de la instrucción 13 (SUBI r2, r2, #1) -> 2 ciclos de detención.
+
+Cantidad total de detenciones: 6 * 150 iteraciones = 900 detenciones. + 1 detención final por riesgo de control = 901 detenciones en total.
+
+c) Código reordenado para reducir detenciones:
+1 		ADDI r1, r0, #0x5000
+2 		ADDI r2, r0, #150	
+3 		ADD r3, r0, r0		
+4 		ADDI r4, r0, #40	
+5 		ADDI r5, r0, #0x4000
+6 OTRO:	LW r6, 0(r1)		
+11 		ADDI r3, r3, #1		
+13 		SUBI r2, r2, #1		
+7 		SLT r7, r6, r4		
+8 		BNEZ r7, PROX		
+9 		SW 0(r5), r6		
+10 		ADDI r5, r5, #4		
+12 PROX:	ADDI r1, r1, #4	
+14 		BNEZ r2, OTRO		
+15 		SW 0(r5), r3		
+16 		TRAP 0
+
+- Con esta implementacion tendriamos 2 detenciones para la instruccion 7 y 8 en cada iteracion,  + 1 detencion por la instruccion por el riesgo de control en la instruccion 14.
+Por lo tanto, la cantidad total de detenciones seria: 2 * 150 iteraciones = 300 detenciones + 1 detencion final por riesgo de control = 301 detenciones en total.

@@ -1,0 +1,47 @@
+; Realice el seguimiento del siguiente código de programación en assembler del DLX para especificar cuál es
+; la tarea que realiza y agregue las directivas para el programa ensamblador.
+
+b) Determinar dónde se producen riesgos de datos y de control suponiendo que el diseño del uP no incluye
+anticipación (forwarding) o atajos o cortocircuitos. Determinar la cantidad y ubicación de las detenciones
+en el flujo de las instrucciones que debe efectuar el uP para resolver las dependencias de datos.
+c) Reordenar el código para tratar de reducir la cantidad de detenciones o bien eliminarlas.
+d) Desenrollar el bucle una cantidad de veces de manera de reducir la cantidad de detenciones o bien
+eliminarlas.
+
+
+1 		ADDI r1, r0, #0x3000 	|IF|ID|EX|ME|WB|					; Coloca en r1 la dirección inicial del bloque de memoria r1 = 0x3000
+2 		ADDI r2,r0, #0		       |IF|ID|EX|ME|WB|					; Inicializa el acumulador r2 a 0
+3 		ADDI r3, r0, #100		     |IF|ID|EX|ME|WB|			   ; Inicializa el contador r3 con el valor 100 (número de elementos a procesar)
+4 Loop 	LW r4, 0(r1)			         |IF|ID|EX|ME|WB|			; Carga en r4 el valor almacenado en la dirección apuntada por r1 -> r4 = Mem[0x3000 + offset]
+5 		SGT r5, r4, #525    			   |IF|ID|EX|ME|WB|	   		; Compara si r4 > 525, si es así r5 = 1, sino r5 = 0
+6 		BEQZ r5, salto					       |IF|ID|EX|ME|WB|			; Si r5 == 0 (r4 <= 525) salta a la etiqueta 'salto'
+7 		ADD r2, r2, r4						      |IF|ID|EX|ME|WB|		; Si r4 > 525, acumula el valor de r4 en r2 -> r2 = r2 + r4
+8 salto ADDI r1, r1, #4							     |IF|ID|EX|ME|WB|		; Incrementa r1 en 4 para apuntar al siguiente elemento (palabras de 4 bytes)
+9 		SUBI r3,r3,#1							        |IF|ID|EX|ME|WB|	; Decrementa el contador r3 en 1
+10 		BNEZ r3, loop 							           |IF|ID|EX|ME|WB|	; Si r3 != 0, repite el ciclo
+11 		SW 0(r1), r2							              |IF|ID|EX|ME|WB| ; Almacena el resultado en la dirección apuntada por r1 + offset-Mem[0x3000 + offset] = r2
+12 		TRAP 0
+; Lo que realiza el programa es sumar todos los elementos de un bloque de memoria de 100 componentes que sean mayores a 525, para finalmente en la ultima componente de memoria almacenar la suma total.
+
+b) Riesgos de datos y de control:
+- Instrucción 5 (SGT r5, r4, #525) depende de la instrucción 4 (LW r4, 0(r1)) -> 2 ciclo de detención.
+- Instrucción 6 (BEQZ r5, salto) depende de la instrucción 5 (SGT r5, r4, #525) -> 2 ciclo de detención.
+- Instrucción 10 (BNEZ r3, loop) depende de la instrucción 9 (SUBI r3,r3,#1) -> 2 ciclos de detención.
+- Cantidad total de detenciones: 6 * 100 iteraciones = 600 detenciones. + 1 detención final por riesgo de control = 601 detenciones en total.
+
+c) Código reordenado para reducir detenciones desde Loop:
+1 		ADDI r1, r0, #0x3000
+2 		ADDI r2,r0, #0		
+3 		ADDI r3, r0, #100	
+4 Loop 	LW r4, 0(r1)		
+5 		SGT r5, r4, #525   
+9 		SUBI r3,r3,#1		
+6 		BEQZ r5, salto		
+7 		ADD r2, r2, r4		
+8 salto ADDI r1, r1, #4		
+10 		BNEZ r3, loop 		
+11 		SW 0(r1), r2		
+12 		TRAP 0
+
+- Con esta implementacion tendriamos 2 detenciones para la instruccion 4 y 5 en cada iteracion, + 1 detencion por la instruccion 5 y 6 en cada iteracion + 1 detencion por la instruccion por el riesgo de control en la instruccion 10.
+Por lo tanto, la cantidad total de detenciones seria: 3 * 100 iteraciones = 300 detenciones + 1 detencion final por riesgo de control = 301 detenciones en total.
