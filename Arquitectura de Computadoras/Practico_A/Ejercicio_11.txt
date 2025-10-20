@@ -12,7 +12,7 @@ bi:			.space 804				; reserva de espacio para almacenar los elementos mayores o
 			.text 0x100				; comienzo del código
 main:		ADDI r1, r0, #ai		; Coloca en r1 la dirección inicial del bloque de memoria
 			ADDI r2, r0, #200		; Inicializa el contador r2 con el valor 200
-			ADD r3, r0, r0			; Inicializa el acumulador r3 a 0
+			ADD r3, r0, r0			; Inicializa el contador r3 a 0
 			ADDI r4, r0, #350		; Inicializa el límite superior r4 con el valor 350
 			ADDI r5, r0, #bi		; Coloca en r5 la dirección de inicio para almacenar los resultados
 ITERA:		LW r6, 0(r1)			; Carga en r6 el valor almacenado en la dirección apuntada por r1
@@ -37,7 +37,7 @@ bi:			.space 804				; reserva de espacio para almacenar los elementos mayores o
 			.text 0x100				; comienzo del código
 main:		ADDI r1, r0, #ai		; Coloca en r1 la dirección inicial del bloque de memoria
 			ADDI r2, r0, #200		; Inicializa el contador r2 con el valor 200
-			ADD r3, r0, r0			; Inicializa el acumulador r3 a 0
+			ADD r3, r0, r0			; Inicializa el contador r3 a 0
 			ADDI r4, r0, #350		; Inicializa el límite superior r4 con el valor 350
 			ADDI r5, r0, #bi		; Coloca en r5 la dirección de inicio para almacenar los resultados
 ITERA:		LW r6, 0(r1)			; Carga en r6 el valor almacenado en la dirección apuntada por r1
