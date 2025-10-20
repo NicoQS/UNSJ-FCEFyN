@@ -43,7 +43,7 @@ main:		ADDI r1, r0, #ai		; Coloca en r1 la dirección inicial del bloque de memo
 ITERA:		LW r6, 0(r1)			; Carga en r6 el valor almacenado en la dirección apuntada por r1
 			ADDI r1, r1, #4			; Incrementa r1 en 4 para apuntar al siguiente elemento
 			SUBI r2, r2, #1			; Decrementa el contador r2 en 1
-			SGT r7, r6, r4			; Compara si r6 >= 350 = r4, si es así r7 = 1, sino r7 = 0
+			SGE r7, r6, r4			; Compara si r6 >= 350 = r4, si es así r7 = 1, sino r7 = 0
 			BEQZ r7, PROX			; Si r7 == 0 (r6 < 350) salta a la etiqueta 'PROX'
 			SW 0(r5), r6			; Almacena el valor de r6 en la dirección apuntada por r5
 			ADDI r5, r5, #4			; Incrementa r5 en 4 para apuntar a la siguiente posición de almacenamiento
