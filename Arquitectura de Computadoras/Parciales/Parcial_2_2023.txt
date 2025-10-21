@@ -1,0 +1,89 @@
+Generar un arreglo de datos en memoria a partir de la dirección 0x2000 con los valores extraídos de un arreglo
+de datos de 15 elementos de 4 bytes cargado en memoria a partir de la dirección 0x1300 y que cumplan con la
+condición de ser mayores o iguales a una constante guardada en la dirección 0x1200. Calcular la cantidad de
+datos generados y guardar el resultado al final del arreglo origen.
+a) Escribir el código en Assembler del DLX con las directivas del programa ensamblador que ejecute dicha
+tarea. Cargar el código a partir de la dirección 100h.
+b) Dibuje el cauce para la secuencia de instrucciones del código e indique sobre el mismo donde se producen
+riesgos de datos y de control suponiendo que el diseño del uP no incluye anticipación (forwarding) o atajos
+o cortocircuitos.
+c) Determinar la cantidad y ubicación de las detenciones en el flujo de las instrucciones que debe efectuar el
+uP para resolver las dependencias de datos.
+d) Que se puede hacer para disminuir las detenciones debidas a los riesgos de datos. Proponer un
+reordenamiento del código (Planificación estática de instrucciones) para resolver las dependencias de datos.
+
+a) 
+		.data 0x1200
+c: 		.word 50			; Constante para comparar
+		.data 0x1300
+a: 		.word 1..15			; Arreglo de 15 elementos
+		.data 0x2000
+b: 		.space 60			; Reserva de espacio para 15 elementos
+		.text 0x100
+1 MAIN:	ADD r2,r0,r0			; r2 = 0 (contador de elementos mayores o iguales a la constante c)
+2 		ADDI r3,r0,#15			; r3 = 15 (contador de elementos del arreglo a)
+3 		ADDI r4,r0,#a		; r4 = dirección inicial del arreglo a
+4 		ADDI r5,r0,#b		; r5 = dirección inicial del arreglo b
+5 		ADDI r6,r0,#c		; r6 = dirección de la constante
+6 ITERA:LW r7,0(r4)			; r7 = Mem[r4] (cargar elemento del arreglo a)
+7 		SUBI r3,r3,#1		; Decrementar contador de elementos del arreglo a
+8 		ADDI r4,r4,#4		; Incrementar dirección del arreglo a
+9 		SGT r8,r7,r6		; r8 = 1 si r7 >= constante c, sino r8 = 0
+10 		BEQZ r8,PROX		; Si r8 == 0, saltar a PROX
+11 		SW 0(r5),r7			; Almacenar r7 en el arreglo b
+13 		ADDI r2,r2,#1		; Incrementar contador de elementos mayores o iguales a cn del arreglo a
+12 		ADDI r5,r5,#4		; Incrementar dirección del arreglo b
+14 PROX:BNEZ r3,ITERA		; Si r3 != 0, repetir el ciclo
+15 		SW 0(r5),r2			; Almacenar la cantidad de elementos generados al final del arreglo b
+16 		TRAP 0
+
+b) y c) Riesgos de datos y de control:
+- Instruccion 10 (BEQZ r8,PROX) depende de la instruccion 9 (SGT r8,r7,r6) -> 2 ciclos de detencion.
+- Instruccion 15 (SW 0(r5),r2) depende de la instruccion 12 (ADDI r5,r5,#4) -> 1 ciclo de detencion.
+- Instruccion 14 (BNEZ r3,ITERA) por riesgo de control -> 1 ciclo de detencion.
+
+- Para solucionar los riesgos de datos y de control sin modificar el orden de las instrucciones, es necesario detener el cauce:
+  * Entre la instruccion 9 y 10: 2 detenciones
+  * Entre la instruccion 12 y 15: 1 detencion
+  * Riesgo de control en la instruccion 14: 1 detencion
+- Cantidad total de detenciones: 2 * 15 + 1 detencion final + 1 detencion por riesgo de control = 32 detenciones en total.
+
+d) El programa quedaria de la siguiente manera con las detenciones marcadas:
+1 MAIN:	ADD r2,r0,r0	
+2 		ADDI r3,r0,#15	
+3 		ADDI r4,r0,#a	
+4 		ADDI r5,r0,#b	
+5 		ADDI r6,r0,#c	
+6 ITERA:LW r7,0(r4)		
+7 		SUBI r3,r3,#1	
+8 		ADDI r4,r4,#4	
+9 		SGT r8,r7,r6
+10		NOP				; Detencion
+11		NOP				; Detencion	
+12 		BEQZ r8,PROX	
+13 		SW 0(r5),r7		
+14 		ADDI r2,r2,#1	
+15 		ADDI r5,r5,#4	
+15 PROX:BNEZ r3,ITERA
+16		NOP				; Detencion
+17		NOP				; Detencion	
+18 		SW 0(r5),r2		
+19 		TRAP 0
+
+Estrategia de reordenamiento de instrucciones:
+1 MAIN:	ADD r2,r0,r0	
+2 		ADDI r3,r0,#15	
+3 		ADDI r4,r0,#a	
+4 		ADDI r5,r0,#b	
+5 		ADDI r6,r0,#c	
+6 ITERA:LW r7,0(r4)		
+7 		SUBI r3,r3,#1	
+8 		ADDI r4,r4,#4	
+9 		SGT r8,r7,r6	
+10 		BEQZ r8,PROX	
+11 		SW 0(r5),r7		
+13 		ADDI r2,r2,#1	
+12 		ADDI r5,r5,#4	
+14 PROX:BNEZ r3,ITERA	
+15 		SW 0(r5),r2		
+16 		TRAP 0

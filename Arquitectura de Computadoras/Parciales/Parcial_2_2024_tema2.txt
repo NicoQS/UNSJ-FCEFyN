@@ -1,0 +1,132 @@
+Ejercicio 1:
+a) Realizar el seguimiento del siguiente código de programación en assembler del DLX que se encuentra cargado en la direccion de memoria 0x200 para especificar cuál es la tarea que realiza y agregar las directivas para el programa ensamblador.
+
+b) Determinar dónde se producen riesgos de datos y de control suponiendo que el diseño del uP no incluye anticipación (forwarding) o atajos o cortocircuitos. Determinar la cantidad y ubicación de las detenciones en el flujo de las instrucciones que debe efectuar el uP para resolver las dependencias de datos.
+
+c) Utilizar 2 estrategias para resolver los riesgos de datos y de control.
+
+1 		ADD r2,r0,r0			; r2 = 0
+2 		ADDI r3,r0,#35			; r3 = 35
+3 		ADDI r1,r0,#0x3100		; r1 = 0x3100
+4 OTRO: LW r4,0(r1)				; r4 = Mem[r1]
+5 		ADDI r1,r1,#4			; r1 = r1 + 4
+6 		ADD r2,r4,r2			; r2 = r2 + r4
+7 		SUBI r3,r3,#1			; r3 = r3 - 1
+8 		BNEZ r3,OTRO			; Si r3 != 0 va a OTRO
+9 		SW b(r0),r2				; Mem[b] = r2
+10 		TRAP 0
+
+a) Lo que realiza el programa es sumar 35 enteros de 4 bytes almacenados en memoria a partir de la dirección 0x3100 y guardar el resultado de la suma en la posición de memoria indicada por la etiqueta b.
+Codigo en directivas para el programa ensamblador.
+
+		.data 0x3100
+a: 		.word ...				; Aquí se deben definir o reservar los 35 elementos de memoria que se van a procesar.
+b: 		.space 4				; reserva de 4 bytes para almacenar el resultado de la suma.
+		.text 0x100				; comienzo del código
+1 		ADD r2,r0,r0		
+2 		ADDI r3,r0,#35		
+3 		ADDI r1,r0,#0x3100	
+4 OTRO: LW r4,0(r1)			
+5 		ADDI r1,r1,#4		
+6 		ADD r2,r4,r2		
+7 		SUBI r3,r3,#1		
+8 		BNEZ r3,OTRO		
+9 		SW b(r0),r2			
+10 		TRAP 0
+
+b) Riesgos de datos y de control:
+- Instruccion 4 (LW r4,0(r1)) depende de la instruccion 3 (ADDI r1,r0,#0x3100) -> 2 ciclos de detencion.
+- Instruccion 5 (ADDI r1,r1,#4) depende de la instruccion 3 (ADDI r1,r0,#0x3100) -> 1 ciclos de detencion a menos que se atienda la dependencia anterior, de ser asi no hay detencion.
+- Instruccion 6 (ADD r2,r4,r2) depende de la instruccion 4 (LW r4,0(r1)) -> 1 ciclos de detencion.
+- Instruccion 8 (BNEZ r3,OTRO) depende de la instruccion 7 (SUBI r3,r3,#1) -> 2 ciclos de detencion.
+- Instruccion 8 se produce un riesgo de control -> 1 ciclos de detencion.
+
+- Para solucionar los riesgos de datos y de control sin modificar el orden de las instrucciones, es necesario detener el cauce:
+  * Entre la instruccion 3 y 4: 2 detenciones
+  * Entre la instruccion 4 y 6: 1 detencion
+  * Entre la instruccion 7 y 8: 2 detenciones
+  * Riesgo de control en la instruccion 8: 1 detencion
+- Cantidad total de detenciones: 2 + 3 * 35 + 1 detencion final por riesgo de control =  108 detenciones en total.
+
+c) Estrategias para resolver los riesgos de datos y de control:
+El programa quedaria de la siguiente manera con las detenciones marcadas:
+1 		ADD r2,r0,r0		
+2 		ADDI r3,r0,#35		
+3 		ADDI r1,r0,#0x3100
+4		NOP					; Detencion
+5		NOP					; Detencion
+6 OTRO: LW r4,0(r1)			
+7 		ADDI r1,r1,#4
+8		NOP					; Detencion
+9 		ADD r2,r4,r2		
+10 		SUBI r3,r3,#1
+11		NOP					; Detencion
+12		NOP					; Detencion
+13 		BNEZ r3,OTRO		
+14 		SW b(r0),r2			
+15 		TRAP 0
+
+Estrategia de reordenamiento de instrucciones:
+1		ADDI r1,r0,#0x3100
+2		ADD r2,r0,r0		
+3		ADDI r3,r0,#35		
+4 OTRO: LW r4,0(r1)			
+5		SUBI r3,r3,#1		
+6		ADDI r1,r1,#4		
+7		ADD r2,r4,r2		
+8		BNEZ r3,OTRO
+9		NOP		
+10		SW b(r0),r2			
+11		TRAP 0
+Con esta implementacion solo se necesita 1 detencion para la instruccion 8 (BNEZ r3,OTRO) por riesgo de control y 1 detencion por la instruccion 5 que depende de la instruccion 3 (LW r4,0(r1)).
+Por lo tanto, la cantidad total de detenciones seria: 1 + 1 = 2 detenciones en total.
+
+
+Ejercicio 2:
+Confeccionar un programa en assembler del DLX con las directivas al compilador que, a partir de un conjunto de 30 datos enteros de 4 bytes, almacenados en memoria en forma consecutiva a partir de la direccion 0x1300, generar un nuevo conjunto de datos consecutivos (arreglo) a partir de la direccion 0x1500 con los enteros mayores a 25, contar los datos del nuevo arreglo y guardar ese valor al final del primer conjunto de datos. Cargar el programa a partir de la direccion 0x100.
+
+		.data 0x1300
+a:		.word  1...30			; Aquí se deben definir o reservar los 30 elementos de memoria que se van a procesar.
+		.data 0x1500
+b:		.space 124				; reserva de espacio para almacenar los elementos mayores a 25 (30*4=120 bytes + 4 bytes para almacenar la cantidad)
+		.text 0x100				; comienzo del código
+main:	ADDI r1, r0, #a			; r1 apunta al vector [ai]
+		ADDI r2, r0, #b 		; r2 apunta al vector [bi]
+		ADDI r3, r0, #30 		; r3 es el contador de iteraciones
+		ADD r4, r0, r0			; r4 es el contador de elementos mayores a 25
+		ADDI r5, r0, #25		; r5 tiene el valor 25 de comparacion
+ITERA:	LW r6, 0(r1)			; cargar en r6 el elemento ai
+		SGT r7, r6, r5			; 1 si r6 > 25 sino 0
+		BEQZ r7, PROX			; si r7 == 0 salta a PROX
+		SW 0(r2), r6			; almacenar el elemento ai en la posición de bi
+		ADDI r2, r2, #4			; incrementar r2 en 4 para apuntar al próximo dato (elemento bi).
+		ADDI r4, r4, #1			; incrementar el contador de elementos mayores a 25
+PROX:	ADDI r1, r1, #4			; incrementar r1 en 4 para apuntar al próximo dato (elemento ai).
+		SUBI r3, r3, #1			; decrementar en 1 el contador de iterar.
+		BNEZ r3, ITERA			; si r3 != 0 va a ITERA
+		SW 0(r2), r4			; almacenar la cantidad de elementos mayores a 25 al final del primer conjunto de datos
+		TRAP 0
+
+Otra forma de escribir el código podría ser:
+
+		.data 0x1500
+a:		.word  1...30			; Aquí se deben definir o reservar los 30 elementos de memoria que se van a procesar.
+		.data 0x1300
+b:		.space 124				; reserva de espacio para almacenar los elementos mayores a 25 (30*4=120 bytes + 4 bytes para almacenar la cantidad)
+		.text 0x100				; comienzo del código
+main:	ADDI r1, r0, #a			; r1 apunta al vector [ai]
+		ADDI r2, r0, #b 		; r2 apunta al vector [bi]
+		ADDI r3, r0, #30 		; r3 es el contador de iteraciones
+		ADD r4, r0, r0			; r4 es el contador de elementos mayores a 25
+		ADDI r5, r0, #25		; r5 tiene el valor 25 de comparacion
+ITERA:	LW r6, 0(r1)			; cargar en r6 el elemento ai
+		ADDI r1, r1, #4			; incrementar r1 en 4 para apuntar al próximo dato (elemento ai).
+		SUBI r3, r3, #1			; decrementar en 1 el contador de iterar.
+		SGT r7, r6, r5			; 1 si r6 > 25 sino 0
+		BEQZ r7, PROX			; si r7 == 0 salta a PROX
+		SW 0(r2), r6			; almacenar el elemento ai en la posición de bi
+		ADDI r2, r2, #4			; incrementar r2 en 4 para apuntar al próximo dato (elemento bi).
+		ADDI r4, r4, #1			; incrementar el contador de elementos mayores a 25
+PROX:	BNEZ r3, ITERA			; si r3 != 0 va a ITERA
+		SW 0(r2), r4			; almacenar la cantidad de elementos mayores a 25 al final del primer conjunto de datos
+		TRAP 0

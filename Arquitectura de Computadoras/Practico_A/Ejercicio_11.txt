@@ -32,8 +32,7 @@ Otra forma de escribir el código podría ser:
 			.data 0x4500
 ai:			.word  0...200				; Aquí se deben definir o reservar los 200 elementos de memoria que se van a procesar.
 			.data 0x3500
-bi:			.space 804				; reserva de espacio para almacenar los elementos mayores o
-									; iguales a 350 (200*4=800 bytes + 4 bytes para almacenar la cantidad)
+bi:			.space 804				; reserva de espacio para almacenar los elementos mayores o iguales a 350 (200*4=800 bytes + 4 bytes para almacenar la cantidad)
 			.text 0x100				; comienzo del código
 main:		ADDI r1, r0, #ai		; Coloca en r1 la dirección inicial del bloque de memoria
 			ADDI r2, r0, #200		; Inicializa el contador r2 con el valor 200
