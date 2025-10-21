@@ -30,8 +30,12 @@ b) Riesgos de datos y de control:
 - Instrucción 6 (SW 0(r3), r5) depende de la instrucción 4 (LW r5, 0(r2)) -> 1 ciclo de detención.
 - Instrucción 7 (SW 0(r2), r6) depende de la instrucción 5 (LW r6, 0(r3)) -> 1 ciclo de detención.
 - Instrucción 11 (BNEZ r4, iterar) depende de la instrucción 10 (SUBI r4, r4, #1) -> 2 ciclos de detención.
+- Para solucionar los riesgos de datos y de control sin modificar el orden de las instrucciones, es necesario detener el cauce:
+ * 1 ciclo entre las instrucciones 4 y 6.
+ * 1 ciclo entre las instrucciones 5 y 7.
+ * 2 ciclos entre las instrucciones 10 y 11.
+ * 1 ciclo después de la instrucción 11.
 Cantidad total de detenciones: 4 * 15 iteraciones = 60 detenciones. + 1 detención final por riesgo de control = 61 detenciones en total.
-(PREGUNTAR)
 
 Solucion con NOP desde main:
 1 main:	ADDI r2, r0, #0x1000
@@ -135,7 +139,13 @@ b) Riesgos de datos y de control:
 - Instrucción 6 (SW 0(r3), r5) depende de la instrucción 4 (LW r5, 0(r2)) -> 1 ciclo de detención.
 - Instrucción 7 (SW 0(r2), r6) depende de la instrucción 5 (LW r6, 0(r3)) -> 1 ciclo de detención.
 - Instrucción 11 (BNEZ r4, iterar) depende de la instrucción 10 (SUBI r4, r4, #1) -> 2 ciclos de detención.
+- Para solucionar los riesgos de datos y de control sin modificar el orden de las instrucciones, es necesario detener el cauce:
+ * 1 ciclo entre las instrucciones 4 y 6.
+ * 1 ciclo entre las instrucciones 5 y 7.
+ * 2 ciclos entre las instrucciones 10 y 11.
+ * 1 ciclo después de la instrucción 11.
 Cantidad total de detenciones: 4 * 20 iteraciones = 80 detenciones. + 1 detención final por riesgo de control = 81 detenciones en total.
+
 Solucion con NOP desde main:
 1 main:	ADDI r2, r0, #0x1000
 2 		ADDI r3, #b, #20
@@ -231,6 +241,12 @@ b) Riesgos de datos y de control:
 - Instrucción 5 (ADD r6, r5, r3) depende de la instrucción 4 (LW r5, 0(r2)) -> 2 ciclo de detención.
 - Instrucción 6 (SW 0(r2), r6) depende de la instrucción 5 (ADD r6, r5, r3) -> 2 ciclo de detención.
 - Instrucción 9 (BNEZ r4, iterar) depende de la instrucción 8 (SUBI r4, r4, #1) -> 2 ciclos de detención.
+- Para solucionar los riesgos de datos y de control sin modificar el orden de las instrucciones, es necesario detener el cauce:
+ * 2 ciclos entre las instrucciones 4 y 5.
+ * 2 ciclos entre las instrucciones 5 y 6.
+ * 2 ciclos entre las instrucciones 8 y 9.
+ * 1 ciclo después de la instrucción 9.
+ 
 - Cantidad total de detenciones: 6 * 10 iteraciones = 60 detenciones. + 1 detenciones final por riesgo de control = 61 detenciones en total.
 c) Código reordenado para reducir detenciones desde main:
 
@@ -260,7 +276,7 @@ d) Código desenrollado 2 veces para reducir detenciones desde main:
 10 			SW -8(r2), r7 	
 11 			SW -4(r2), r8	
 12			BNEZ r4, iterar		
-13			TRAP 0		
+13			TRAP 0				
 
 ; Mover (copiar) un arreglo de datos cargado en memoria a otra ubicación de memoria. El arreglo se encuentra
 ; a partir de la dirección 1300h y posee 18 elementos de 32 bits. Se desea moverlo a la ubicación de memoria
@@ -293,6 +309,9 @@ b:			.space 72 												; reserva de 72 bytes para el arreglo [bi] (18*4=72)
 b) Riesgos de datos y de control:
 - Instrucción 5 (SW 0(r3), r5) depende de la instrucción 4 (LW r5, 0(r2)) -> 2 ciclo de detención.
 - Instrucción 9 (BNEZ r4, iterar) depende de la instrucción 8 (SUBI r4, r4, #1) -> 2 ciclos de detención.
+- Para solucionar los riesgos de datos y de control sin modificar el orden de las instrucciones, es necesario detener el cauce:
+ * 2 ciclos entre las instrucciones 4 y 5.
+ * 2 ciclos entre las instrucciones 8 y 9.
 - Cantidad total de detenciones: 4 * 18 iteraciones = 72 detenciones. + 1 detención final por riesgo de control = 73 detenciones en total.
 
 c) Código reordenado para reducir detenciones desde main:
@@ -357,6 +376,11 @@ b) Riesgos de datos y de control:
 - Instrucción 5 (SGT r5, r4, #525) depende de la instrucción 4 (LW r4, 0(r1)) -> 2 ciclo de detención.
 - Instrucción 6 (BEQZ r5, salto) depende de la instrucción 5 (SGT r5, r4, #525) -> 2 ciclo de detención.
 - Instrucción 10 (BNEZ r3, loop) depende de la instrucción 9 (SUBI r3,r3,#1) -> 2 ciclos de detención.
+- Para solucionar los riesgos de datos y de control sin modificar el orden de las instrucciones, es necesario detener el cauce:
+ * 2 ciclos entre las instrucciones 4 y 5.
+ * 2 ciclos entre las instrucciones 5 y 6.
+ * 2 ciclos entre las instrucciones 9 y 10.
+ * 1 ciclo después de la instrucción 10.
 - Cantidad total de detenciones: 6 * 100 iteraciones = 600 detenciones. + 1 detención final por riesgo de control = 601 detenciones en total.
 
 c) Código reordenado para reducir detenciones desde Loop:
@@ -375,6 +399,7 @@ c) Código reordenado para reducir detenciones desde Loop:
 
 - Con esta implementacion tendriamos 2 detenciones para la instruccion 4 y 5 en cada iteracion, + 1 detencion por la instruccion 5 y 6 en cada iteracion + 1 detencion por la instruccion por el riesgo de control en la instruccion 10.
 Por lo tanto, la cantidad total de detenciones seria: 3 * 100 iteraciones = 300 detenciones + 1 detencion final por riesgo de control = 301 detenciones en total.
+
 
 ; Realice el seguimiento del siguiente código de programación en assembler del DLX para especificar cuál es
 ; la tarea que realiza y agregue las directivas para el programa ensamblador.
@@ -409,7 +434,11 @@ b) Riesgos de datos y de control:
 - Instrucción 7 (SLT r7, r6, r4) depende de la instrucción 6 (LW r6, 0(r1)) -> 2 ciclos de detención.
 - Instrucción 8 (BNEZ r7, PROX) depende de la instrucción 7 (SLT r7, r6, r4) -> 2 ciclos de detención.
 - Instrucción 14 (BNEZ r2, OTRO) depende de la instrucción 13 (SUBI r2, r2, #1) -> 2 ciclos de detención.
-
+- Para solucionar los riesgos de datos y de control sin modificar el orden de las instrucciones, es necesario detener el cauce:
+ * 2 ciclos entre las instrucciones 6 y 7.
+ * 2 ciclos entre las instrucciones 7 y 8.
+ * 2 ciclos entre las instrucciones 13 y 14.
+ * 1 ciclo después de la instrucción 14.
 Cantidad total de detenciones: 6 * 150 iteraciones = 900 detenciones. + 1 detención final por riesgo de control = 901 detenciones en total.
 
 c) Código reordenado para reducir detenciones:
