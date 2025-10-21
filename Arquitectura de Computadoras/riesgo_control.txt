@@ -1,0 +1,434 @@
+; Intercambiar las ubicaciones en memoria de dos arreglos de datos [ai] y [bi] de 32 bits y 15 elementos
+; cargados en memoria a partir de las direcciones 1000h y 1200h respectivamente.
+
+b) Determinar dónde se producen riesgos de datos y de control suponiendo que el diseño del uP no incluye
+anticipación (forwarding) o atajos o cortocircuitos. Determinar la cantidad y ubicación de las detenciones
+en el flujo de las instrucciones que debe efectuar el uP para resolver las dependencias de datos.
+c) Reordenar el código para tratar de reducir la cantidad de detenciones o bien eliminarlas.
+d) Desenrollar el bucle una cantidad de veces de manera de reducir la cantidad de detenciones o bien
+eliminarlas.
+
+		.data 0x1000
+a:		.word 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 ; arreglo [ai] de 15 elementos
+		.data 0x1200
+b:		.word 16,17,18,19,20,21,22,23,24,25,26,27,28,29,30 ; arreglo [bi] de 15 elementos
+		.text 0x100				; comienzo del código
+1 main:	ADDI r2, r0, #0x1000	|IF|ID|EX|ME|WB| 										
+2 		ADDI r3, r0, #0x1200	   |IF|ID|EX|ME|WB|		 									
+3 		ADDI r4, r0, #15 		      |IF|ID|EX|ME|WB|											
+4 iterar: 	LW r5, 0(r2) 			     |IF|ID|EX|ME|WB|													
+5 		LW r6, 0(r3) 				        |IF|ID|EX|ME|WB|									
+6 		SW 0(r3), r5 					       |IF|ID|EX|ME|WB|						
+7 		SW 0(r2), r6 						      |IF|ID|EX|ME|WB|							
+8 		ADDI r2, r2, #4 						     |IF|ID|EX|ME|WB|	
+9 		ADDI r3, r3, #4 							    |IF|ID|EX|ME|WB|	
+10 		SUBI r4, r4, #1 								   |IF|ID|EX|ME|WB|			
+11 		BNEZ r4, iterar										  |IF|ID|EX|ME|WB|		
+12 		TRAP 0
+
+b) Riesgos de datos y de control:
+- Instrucción 6 (SW 0(r3), r5) depende de la instrucción 4 (LW r5, 0(r2)) -> 1 ciclo de detención.
+- Instrucción 7 (SW 0(r2), r6) depende de la instrucción 5 (LW r6, 0(r3)) -> 1 ciclo de detención.
+- Instrucción 11 (BNEZ r4, iterar) depende de la instrucción 10 (SUBI r4, r4, #1) -> 2 ciclos de detención.
+Cantidad total de detenciones: 4 * 15 iteraciones = 60 detenciones. + 1 detención final por riesgo de control = 61 detenciones en total.
+(PREGUNTAR)
+
+Solucion con NOP desde main:
+1 main:	ADDI r2, r0, #0x1000
+2 		ADDI r3, r0, #0x1200
+3 		ADDI r4, r0, #15 	
+4 iterar: 	LW r5, 0(r2) 	
+5 		LW r6, 0(r3) 		
+6 		SW 0(r3), r5
+		NOP
+7 		SW 0(r2), r6
+		NOP		
+8 		ADDI r2, r2, #4 	
+9 		ADDI r3, r3, #4 	
+10 		SUBI r4, r4, #1 
+		NOP
+		NOP
+11 		BNEZ r4, iterar	
+		NOP
+12 		TRAP 0
+
+c) Código reordenado para reducir detenciones desde main:
+1 main:	ADDI r2, r0, #0x1000	|IF|ID|EX|ME|WB| 								
+2 		ADDI r3, r0, #0x1200	   |IF|ID|EX|ME|WB|		 					
+3 		ADDI r4, r0, #15 		      |IF|ID|EX|ME|WB|						
+4 iterar: 	LW r5, 0(r2) 			     |IF|ID|EX|ME|WB|					
+5 		LW r6, 0(r3) 				        |IF|ID|EX|ME|WB|				
+10 		SUBI r4, r4, #1 				       |IF|ID|EX|ME|WB|				
+6 		SW 0(r3), r5 						      |IF|ID|EX|ME|WB|			
+9 		ADDI r3, r3, #4 						     |IF|ID|EX|ME|WB|	
+7 		SW 0(r2), r6 								    |IF|ID|EX|ME|WB|	
+8 		ADDI r2, r2, #4									   |IF|ID|EX|ME|WB|	
+11 		BNEZ r4, iterar										  |IF|ID|EX|ME|WB|
+12		NOP
+
+; Se reduce la cantidad de detenciones a 1 en total por el riesgo de control de la instruccion  11.
+
+d) Código desenrollado 5 veces desde main:
+1 main:	ADDI r2, r0, #0x1000	
+2 		ADDI r3, r0, #0x1200	
+3 		ADDI r4, r0, #15 		
+4 iterar: 	LW r5, #0x1000(r2) 	
+5 		LW r6, #0x1004(r2) 		
+6 		LW r7, #0x1008(r2)		
+7 		LW r8, #0x10012(r2) 	
+8 		LW r9, #0x10016(r2)		
+9 		LW r10, #0x1200(r3) 	
+10		LW r11, #0x1204(r3)		
+11		LW r12, #0x1208(r3)		
+12		LW r13, #0x1212(r3)		
+13		LW r14, #0x1216(r3)		
+13		ADDI r2, r2, #20 		
+14		ADDI r3, r3, #20 
+15	    SUBI r4, r4, #5		
+16		SW -20(r3), r5 			
+17		SW -16(r3), r6 			
+18		SW -12(r3), r7 			
+19		SW -8(r3), r8 			
+20		SW -4(r3), r9 			
+21		SW -20(r2), r10 		
+22		SW -16(r2), r11 		
+23		SW -12(r2), r12 		
+24		SW -8(r2), r13 			
+25		SW -4(r2), r14 			
+26		BNEZ r4, iterar	
+27		NOP		
+28		TRAP 0
+
+; Como hemos desenrollado 5 veces el bucle, el lazo se ejecuta 3 veces y no hay en él ninguna detención debido a dependencias de datos. Solo queda la detención por riesgo de control en la instrucción 25.
+
+; Intercambiar e invertir las ubicaciones en memoria de dos arreglos de datos [ai] y [bi], de manera que el
+; primer dato de un arreglo pase a ser el último dato del otro arreglo y así sucesivamente hasta el final. Los
+; arreglos son de 20 elementos de 32 bits y están cargados en memoria a partir de las direcciones 1000h y
+; 1100h respectivamente.
+
+b) Determinar dónde se producen riesgos de datos y de control suponiendo que el diseño del uP no incluye
+anticipación (forwarding) o atajos o cortocircuitos. Determinar la cantidad y ubicación de las detenciones
+en el flujo de las instrucciones que debe efectuar el uP para resolver las dependencias de datos.
+c) Reordenar el código para tratar de reducir la cantidad de detenciones o bien eliminarlas.
+d) Desenrollar el bucle una cantidad de veces de manera de reducir la cantidad de detenciones o bien eliminarlas.
+
+
+		.data 0x1000
+a:		.word 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20 ; arreglo [ai] de 20 elementos
+		.data 0x1100
+b:		.word 21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40 ; arreglo [bi] de 20 elementos
+		.text 0x100																	; comienzo del código
+1 main:	ADDI r2, r0, #0x1000	|IF|ID|EX|ME|WB|												; r2 apunta al vector [ai]
+2 		ADDI r3, #b, #20		   |IF|ID|EX|ME|WB|												; r3 apunta al final del vector [bi] (1100h + 20*4 = 1140h)
+3 		ADDI r4, r0, #20 		      |IF|ID|EX|ME|WB|											; r4 es el contador de iterar
+4 iterar: 	LW r5, 0(r2) 			     |IF|ID|EX|ME|WB|										; cargar en	 r5 el elemento ai
+5 		LW r6, 0(r3) 					    |IF|ID|EX|ME|WB|									; cargar en r6 el elemento bi (desde el final hacia el principio)
+6 		SW 0(r3), r5 						   |IF|ID|EX|ME|WB|									; almacenar el elemento ai en la posición de bi
+7 		SW 0(r2), r6 						      |IF|ID|EX|ME|WB|								; almacenar el elemento bi en la posición de ai
+8 		ADDI r2, r2, #4 							 |IF|ID|EX|ME|WB|							; incrementar r2 en 4 para apuntar al próximo dato (elemento ai).
+9 		SUBI r3, r3, #4 								|IF|ID|EX|ME|WB|						; decrementar r3 en 4 para apuntar al próximo dato (elemento bi).
+10 		SUBI r4, r4, #1 								   |IF|ID|EX|ME|WB|						; decrementar en 1 el contador de iterar.
+11		BNEZ r4, iterar                                       |IF|ID|EX|ME|WB|
+12 		TRAP 0
+
+b) Riesgos de datos y de control:
+- Instrucción 6 (SW 0(r3), r5) depende de la instrucción 4 (LW r5, 0(r2)) -> 1 ciclo de detención.
+- Instrucción 7 (SW 0(r2), r6) depende de la instrucción 5 (LW r6, 0(r3)) -> 1 ciclo de detención.
+- Instrucción 11 (BNEZ r4, iterar) depende de la instrucción 10 (SUBI r4, r4, #1) -> 2 ciclos de detención.
+Cantidad total de detenciones: 4 * 20 iteraciones = 80 detenciones. + 1 detención final por riesgo de control = 81 detenciones en total.
+Solucion con NOP desde main:
+1 main:	ADDI r2, r0, #0x1000
+2 		ADDI r3, #b, #20
+3 		ADDI r4, r0, #20
+4 iterar: 	LW r5, 0(r2)
+5 		LW r6, 0(r3)
+		NOP
+6 		SW 0(r3), r5
+		NOP
+7 		SW 0(r2), r6
+8 		ADDI r2, r2, #4
+9 		SUBI r3, r3, #4
+10 		SUBI r4, r4, #1
+		NOP
+		NOP
+11		BNEZ r4, iterar
+12 		TRAP 0
+
+c) Código reordenado para reducir detenciones desde main:
+1 main:	ADDI r2, r0, #0x1000	|IF|ID|EX|ME|WB|	
+2 		ADDI r3, #b, #20		   |IF|ID|EX|ME|WB|	
+3 		ADDI r4, r0, #20 		      |IF|ID|EX|ME|WB|	
+4 iterar: 	LW r5, 0(r2) 		         |IF|ID|EX|ME|WB|	
+10 		SUBI r4, r4, #1 		            |IF|ID|EX|ME|WB|	
+5 		LW r6, 0(r3) 			               |IF|ID|EX|ME|WB|	
+6 		SW 0(r3), r5 			                  |IF|ID|EX|ME|WB|	
+9 		SUBI r3, r3, #4 		                     |IF|ID|EX|ME|WB|	
+7 		SW 0(r2), r6 			                        |IF|ID|EX|ME|WB|	
+8 		ADDI r2, r2, #4 		                           |IF|ID|EX|ME|WB|	
+11		BNEZ r4, iterar     	                              |IF|ID|EX|ME|WB|	
+12 		TRAP 0					                                 |IF|ID|EX|ME|WB|
+
+d) Desenrollado del bucle 5 veces desde main:
+1 main:	ADDI r2, r0, #0x1000
+2 		ADDI r3, #b, #20	
+3 		ADDI r4, r0, #20 
+4 iterar: 	LW r5, #0x1000(r2) 	
+5 		LW r6, #0x1004(r2) 		
+6 		LW r7, #0x1008(r2)		
+7 		LW r8, #0x10012(r2) 	
+8 		LW r9, #0x10016(r2)		
+9 		LW r10, r3 	
+10		LW r11, -4(r3)		
+11		LW r12, -8(r3)		
+12		LW r13, -12(r3)		
+13		LW r14, -16(r3)		
+14		SUBI r3, r3, #20 
+15		ADDI r2, r2, #20 		
+16		SUBI r4, r4, #5			
+17		SW 20(r3), r5 			
+18		SW 16(r3), r6 			
+19		SW 12(r3), r7 			
+20		SW 8(r3), r8 			
+21		SW 4(r3), r9 			
+22		SW -20(r2), r10 		
+23		SW -16(r2), r11 		
+24		SW -12(r2), r12 		
+25		SW -8(r2), r13 			
+26		SW -4(r2), r14 			
+27		BNEZ r4, iterar	
+28		NOP		
+29		TRAP 0	
+; Como hemos desenrollado 5 veces el bucle, el lazo se ejecuta 4 veces y no hay en él ninguna detención debido a dependencias de datos. Solo queda la detención por riesgo de control en la instrucción 28.
+
+; Incrementar los elementos de un arreglo de datos [ai] de 32 bits de 10 elementos cargado en memoria a partir
+; de la dirección 1050h en el valor de una constante c de 32 bits almacenada en memoria al final del arreglo.
+; La operación a realizar es: [ai] <- [ai] + c
+
+b) Determinar dónde se producen riesgos de datos y de control suponiendo que el diseño del uP no incluye
+anticipación (forwarding) o atajos o cortocircuitos. Determinar la cantidad y ubicación de las detenciones
+en el flujo de las instrucciones que debe efectuar el uP para resolver las dependencias de datos.
+c) Reordenar el código para tratar de reducir la cantidad de detenciones o bien eliminarlas.
+d) Desenrollar el bucle una cantidad de veces de manera de reducir la cantidad de detenciones o bien
+eliminarlas.
+
+
+			.data 0x1050
+a:			.word 1,2,3,4,5,6,7,8,9,10											; arreglo [ai] de 10 elementos
+c:			.word 5 															; constante c
+			.text 0x100															; comienzo del código	
+1 main:		ADDI r2, r0, #0x1050 	|IF|ID|EX|ME|WB|							; r2 apunta al vector [ai]
+2 			LW r3, c(r0) 			   |IF|ID|EX|ME|WB|							; cargar en r3 la constante c -> c(r0) = dirección_de_c + 0
+3 			ADDI r4, r0, #10 			  |IF|ID|EX|ME|WB|						; r4 es el contador de iterar
+4 iterar: 	LW r5, 0(r2) 					 |IF|ID|EX|ME|WB|					; cargar en r5 el elemento ai -> 0x1050(r2) = offsett de 1050 + direccion_r2
+5 			ADD r6, r5, r3 						|IF|ID|EX|ME|WB|				; r6 <- ai + c
+6 			SW 0(r2), r6 						   |IF|ID|EX|ME|WB|				; almacenar el resultado r6 como el elemento ai
+7 			ADDI r2, r2, #4 						  |IF|ID|EX|ME|WB|			; incremento de r2 en 4 para apuntar al próximo dato (elemento ai).
+8 			SUBI r4, r4, #1 							 |IF|ID|EX|ME|WB|		; decremento en 1 del contador de iterar.
+9 			BNEZ r4, iterar									|IF|ID|EX|ME|WB|	
+10			TRAP 0												
+
+b) Riesgos de datos y de control:
+- Instrucción 5 (ADD r6, r5, r3) depende de la instrucción 4 (LW r5, 0(r2)) -> 2 ciclo de detención.
+- Instrucción 6 (SW 0(r2), r6) depende de la instrucción 5 (ADD r6, r5, r3) -> 2 ciclo de detención.
+- Instrucción 9 (BNEZ r4, iterar) depende de la instrucción 8 (SUBI r4, r4, #1) -> 2 ciclos de detención.
+- Cantidad total de detenciones: 6 * 10 iteraciones = 60 detenciones. + 1 detenciones final por riesgo de control = 61 detenciones en total.
+c) Código reordenado para reducir detenciones desde main:
+
+1 main:		ADDI r2, r0, #0x1050
+2 			LW r3, c(r0) 		
+3 			ADDI r4, r0, #10 	
+4 iterar: 	LW r5, 0(r2) 		
+8 			SUBI r4, r4, #1 	
+5 			ADD r6, r5, r3 		
+6 			SW 0(r2), r6 		
+7 			ADDI r2, r2, #4 	
+9 			BNEZ r4, iterar		
+10			TRAP 0				
+
+- Con esta implementacion tendriamos 1 detencion para la instruccion 3 (ADDI r4, r0, #10 ) y 2 detenciones para la instruccion 5 y 6 en cada iteracion y 1 para la 4 y 5. Por lo tanto, la cantidad total de detenciones seria: 3 * 10 iteraciones = 30 detenciones + 1 detencion final por riesgo de control = 31 detenciones en total.
+
+d) Código desenrollado 2 veces para reducir detenciones desde main:
+1 main:		ADDI r2, r0, #0x1050
+2 			LW r3, c(r0) 		
+3 			ADDI r4, r0, #10 	
+4 iterar: 	LW r5, 0(r2) 	
+5 			LW r6, 4(r2)
+6 			ADDI r2, r2, #8 	
+7 			ADD r7, r5, r3 	
+8 			ADD r8, r6, r3	
+9			SUBI r4, r4, #1 	
+10 			SW -8(r2), r7 	
+11 			SW -4(r2), r8	
+12			BNEZ r4, iterar		
+13			TRAP 0		
+
+; Mover (copiar) un arreglo de datos cargado en memoria a otra ubicación de memoria. El arreglo se encuentra
+; a partir de la dirección 1300h y posee 18 elementos de 32 bits. Se desea moverlo a la ubicación de memoria
+; que se encuentra a partir de la dirección 1600h.
+
+b) Determinar dónde se producen riesgos de datos y de control suponiendo que el diseño del uP no incluye
+anticipación (forwarding) o atajos o cortocircuitos. Determinar la cantidad y ubicación de las detenciones
+en el flujo de las instrucciones que debe efectuar el uP para resolver las dependencias de datos.
+c) Reordenar el código para tratar de reducir la cantidad de detenciones o bien eliminarlas.
+d) Desenrollar el bucle una cantidad de veces de manera de reducir la cantidad de detenciones o bien
+eliminarlas.
+
+
+			.data 0x1300
+a:			.word 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18	; arreglo [ai] de 18 elementos
+			.data 0x1600
+b:			.space 72 												; reserva de 72 bytes para el arreglo [bi] (18*4=72)
+			.text 0x100												; comienzo del código
+1 main:		ADDI r2, r0, #a		|IF|ID|EX|ME|WB|									; r2 apunta al vector [ai]
+2 			ADDI r3, r0, #b		   |IF|ID|EX|ME|WB|								; r3 apunta al vector [bi]
+3 			ADDI r4, r0, #18 		  |IF|ID|EX|ME|WB|								; r4 es el contador de iterar
+4 iterar: 	LW r5, 0(r2) 				 |IF|ID|EX|ME|WB|							; cargar en r5 el elemento ai
+5 			SW 0(r3), r5 					|IF|ID|EX|ME|WB|						; almacenar el elemento ai en la posición de bi -> 0(r3) = direccion_r3 + offset 0
+6 			ADDI r2, r2, #4 				   |IF|ID|EX|ME|WB|					; incrementar r2 en 4 para apuntar al próximo dato (elemento ai).
+7 			ADDI r3, r3, #4 					  |IF|ID|EX|ME|WB|					; incrementar r3 en 4 para apuntar al próximo dato (elemento bi).
+8 			SUBI r4, r4, #1 						 |IF|ID|EX|ME|WB|				; decrementar en 1 el contador de iterar.
+9 			BNEZ r4, iterar								|IF|ID|EX|ME|WB|			
+10 			TRAP 0													
+
+b) Riesgos de datos y de control:
+- Instrucción 5 (SW 0(r3), r5) depende de la instrucción 4 (LW r5, 0(r2)) -> 2 ciclo de detención.
+- Instrucción 9 (BNEZ r4, iterar) depende de la instrucción 8 (SUBI r4, r4, #1) -> 2 ciclos de detención.
+- Cantidad total de detenciones: 4 * 18 iteraciones = 72 detenciones. + 1 detención final por riesgo de control = 73 detenciones en total.
+
+c) Código reordenado para reducir detenciones desde main:
+
+1 main:		ADDI r2, r0, #a	
+2 			ADDI r3, r0, #b	
+3 			ADDI r4, r0, #18
+4 iterar: 	LW r5, 0(r2) 	
+8 			SUBI r4, r4, #1 
+5 			SW 0(r3), r5 	
+6 			ADDI r2, r2, #4 
+7 			ADDI r3, r3, #4 
+9 			BNEZ r4, iterar	
+10 			TRAP 0	
+
+- Con esta implementacion tendriamos 1 detencion para la instruccion 3 (ADDI r4, r0, #18 ) y 1 detencion para la instruccion 4 y 5 en cada iteracion.
+Por lo tanto, la cantidad total de detenciones seria: 1 * 18 iteraciones = 1 + 18 detenciones + 1 detencion final por riesgo de control = 20 detenciones en total.
+
+d) Código desenrollado 3 veces para reducir detenciones desde main:
+1 main:		ADDI r2, r0, #a	
+2 			ADDI r3, r0, #b	
+3 			ADDI r4, r0, #18
+4 iterar: 	LW r5, 0(r2) 	
+5 			LW r6, 4(r2)
+6 			LW r7, 8(r2)
+6 			ADDI r3, r3, #12
+7 			ADDI r2, r2, #12 
+8 			SUBI r4, r4, #1 
+5 			SW -12(r3), r5
+6 			SW -8(r3), r6
+7 			SW -4(r3), r7 	
+9 			BNEZ r4, iterar	
+10 			TRAP 0			
+; Como hemos desenrollado 3 veces el bucle, el lazo se ejecuta 6 veces y no hay en él ninguna detención debido a dependencias de datos. Solo queda la detención por riesgo de control en la instrucción 9.
+
+; Realice el seguimiento del siguiente código de programación en assembler del DLX para especificar cuál es
+; la tarea que realiza y agregue las directivas para el programa ensamblador.
+
+b) Determinar dónde se producen riesgos de datos y de control suponiendo que el diseño del uP no incluye
+anticipación (forwarding) o atajos o cortocircuitos. Determinar la cantidad y ubicación de las detenciones
+en el flujo de las instrucciones que debe efectuar el uP para resolver las dependencias de datos.
+c) Reordenar el código para tratar de reducir la cantidad de detenciones o bien eliminarlas.
+d) Desenrollar el bucle una cantidad de veces de manera de reducir la cantidad de detenciones o bien
+eliminarlas.
+
+
+1 		ADDI r1, r0, #0x3000 	|IF|ID|EX|ME|WB|					; Coloca en r1 la dirección inicial del bloque de memoria r1 = 0x3000
+2 		ADDI r2,r0, #0		       |IF|ID|EX|ME|WB|					; Inicializa el acumulador r2 a 0
+3 		ADDI r3, r0, #100		     |IF|ID|EX|ME|WB|			   ; Inicializa el contador r3 con el valor 100 (número de elementos a procesar)
+4 Loop 	LW r4, 0(r1)			         |IF|ID|EX|ME|WB|			; Carga en r4 el valor almacenado en la dirección apuntada por r1 -> r4 = Mem[0x3000 + offset]
+5 		SGT r5, r4, #525    			   |IF|ID|EX|ME|WB|	   		; Compara si r4 > 525, si es así r5 = 1, sino r5 = 0
+6 		BEQZ r5, salto					       |IF|ID|EX|ME|WB|			; Si r5 == 0 (r4 <= 525) salta a la etiqueta 'salto'
+7 		ADD r2, r2, r4						      |IF|ID|EX|ME|WB|		; Si r4 > 525, acumula el valor de r4 en r2 -> r2 = r2 + r4
+8 salto ADDI r1, r1, #4							     |IF|ID|EX|ME|WB|		; Incrementa r1 en 4 para apuntar al siguiente elemento (palabras de 4 bytes)
+9 		SUBI r3,r3,#1							        |IF|ID|EX|ME|WB|	; Decrementa el contador r3 en 1
+10 		BNEZ r3, loop 							           |IF|ID|EX|ME|WB|	; Si r3 != 0, repite el ciclo
+11 		SW 0(r1), r2							              |IF|ID|EX|ME|WB| ; Almacena el resultado en la dirección apuntada por r1 + offset-Mem[0x3000 + offset] = r2
+12 		TRAP 0
+; Lo que realiza el programa es sumar todos los elementos de un bloque de memoria de 100 componentes que sean mayores a 525, para finalmente en la ultima componente de memoria almacenar la suma total.
+
+b) Riesgos de datos y de control:
+- Instrucción 5 (SGT r5, r4, #525) depende de la instrucción 4 (LW r4, 0(r1)) -> 2 ciclo de detención.
+- Instrucción 6 (BEQZ r5, salto) depende de la instrucción 5 (SGT r5, r4, #525) -> 2 ciclo de detención.
+- Instrucción 10 (BNEZ r3, loop) depende de la instrucción 9 (SUBI r3,r3,#1) -> 2 ciclos de detención.
+- Cantidad total de detenciones: 6 * 100 iteraciones = 600 detenciones. + 1 detención final por riesgo de control = 601 detenciones en total.
+
+c) Código reordenado para reducir detenciones desde Loop:
+1 		ADDI r1, r0, #0x3000
+2 		ADDI r2,r0, #0		
+3 		ADDI r3, r0, #100	
+4 Loop 	LW r4, 0(r1)		
+5 		SGT r5, r4, #525   
+9 		SUBI r3,r3,#1		
+6 		BEQZ r5, salto		
+7 		ADD r2, r2, r4		
+8 salto ADDI r1, r1, #4		
+10 		BNEZ r3, loop 		
+11 		SW 0(r1), r2		
+12 		TRAP 0
+
+- Con esta implementacion tendriamos 2 detenciones para la instruccion 4 y 5 en cada iteracion, + 1 detencion por la instruccion 5 y 6 en cada iteracion + 1 detencion por la instruccion por el riesgo de control en la instruccion 10.
+Por lo tanto, la cantidad total de detenciones seria: 3 * 100 iteraciones = 300 detenciones + 1 detencion final por riesgo de control = 301 detenciones en total.
+
+; Realice el seguimiento del siguiente código de programación en assembler del DLX para especificar cuál es
+; la tarea que realiza y agregue las directivas para el programa ensamblador.
+
+b) Determinar dónde se producen riesgos de datos y de control suponiendo que el diseño del uP no incluye
+anticipación (forwarding) o atajos o cortocircuitos. Determinar la cantidad y ubicación de las detenciones
+en el flujo de las instrucciones que debe efectuar el uP para resolver las dependencias de datos.
+c) Reordenar el código para tratar de reducir la cantidad de detenciones o bien eliminarlas.
+d) Desenrollar el bucle una cantidad de veces de manera de reducir la cantidad de detenciones o bien
+eliminarlas.
+
+1 		ADDI r1, r0, #0x5000	; Coloca en r1 la dirección inicial del bloque de memoria r1 = 0x5000
+2 		ADDI r2, r0, #150		; Inicializa el contador r2 con el valor 150 (número de elementos a procesar)
+3 		ADD r3, r0, r0			; Inicializa el acumulador r3 a 0
+4 		ADDI r4, r0, #40		; Inicializa el límite superior r4 con el valor 40
+5 		ADDI r5, r0, #0x4000	; Coloca en r5 la dirección de inicio para almacenar los resultados
+6 OTRO:	LW r6, 0(r1)			; Carga en r6 el valor almacenado en la dirección apuntada por r1
+7 		SLT r7, r6, r4			; Compara si r6 < 40 = r4, si es así r7 = 1, sino r7 = 0
+8 		BNEZ r7, PROX			; Si r7 != 0 (r6 < 40) salta a la etiqueta 'PROX'
+9 		SW 0(r5), r6			; Almacena el valor de r6 en la dirección apuntada por r5
+10 		ADDI r5, r5, #4			; Incrementa r5 en 4 para apuntar a la siguiente posición de almacenamiento
+11 		ADDI r3, r3, #1			; Incrementa el contador de elementos almacenados en r3
+12 PROX:	ADDI r1, r1, #4			; Incrementa r1 en 4 para apuntar al siguiente elemento
+13 		SUBI r2, r2, #1			; Decrementa el contador r2 en 1
+14 		BNEZ r2, OTRO			; Si r2 != 0, repite el ciclo
+15 		SW 0(r5), r3			; Almacena el número de elementos almacenados en r3
+16 		TRAP 0
+
+; Lo que realiza el programa es copiar todos los elementos de un bloque de memoria de 150 componentes que sean mayores o iguales a 40, a otra ubicación de memoria, y al final almacena en la siguiente posición libre la cantidad de elementos copiados.
+
+b) Riesgos de datos y de control:
+- Instrucción 7 (SLT r7, r6, r4) depende de la instrucción 6 (LW r6, 0(r1)) -> 2 ciclos de detención.
+- Instrucción 8 (BNEZ r7, PROX) depende de la instrucción 7 (SLT r7, r6, r4) -> 2 ciclos de detención.
+- Instrucción 14 (BNEZ r2, OTRO) depende de la instrucción 13 (SUBI r2, r2, #1) -> 2 ciclos de detención.
+
+Cantidad total de detenciones: 6 * 150 iteraciones = 900 detenciones. + 1 detención final por riesgo de control = 901 detenciones en total.
+
+c) Código reordenado para reducir detenciones:
+1 		ADDI r1, r0, #0x5000
+2 		ADDI r2, r0, #150	
+3 		ADD r3, r0, r0		
+4 		ADDI r4, r0, #40	
+5 		ADDI r5, r0, #0x4000
+6 OTRO:	LW r6, 0(r1)		
+11 		ADDI r3, r3, #1		
+13 		SUBI r2, r2, #1		
+7 		SLT r7, r6, r4		
+8 		BNEZ r7, PROX		
+9 		SW 0(r5), r6		
+10 		ADDI r5, r5, #4		
+12 PROX:	ADDI r1, r1, #4	
+14 		BNEZ r2, OTRO		
+15 		SW 0(r5), r3		
+16 		TRAP 0
+
+- Con esta implementacion tendriamos 2 detenciones para la instruccion 7 y 8 en cada iteracion,  + 1 detencion por la instruccion por el riesgo de control en la instruccion 14.
+Por lo tanto, la cantidad total de detenciones seria: 2 * 150 iteraciones = 300 detenciones + 1 detencion final por riesgo de control = 301 detenciones en total.

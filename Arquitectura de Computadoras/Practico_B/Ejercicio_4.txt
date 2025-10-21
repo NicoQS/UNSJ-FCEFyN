@@ -30,8 +30,12 @@ b) Riesgos de datos y de control:
 - Instrucción 6 (SW 0(r3), r5) depende de la instrucción 4 (LW r5, 0(r2)) -> 1 ciclo de detención.
 - Instrucción 7 (SW 0(r2), r6) depende de la instrucción 5 (LW r6, 0(r3)) -> 1 ciclo de detención.
 - Instrucción 11 (BNEZ r4, iterar) depende de la instrucción 10 (SUBI r4, r4, #1) -> 2 ciclos de detención.
+- Para solucionar los riesgos de datos y de control sin modificar el orden de las instrucciones, es necesario detener el cauce:
+ * 1 ciclo entre las instrucciones 4 y 6.
+ * 1 ciclo entre las instrucciones 5 y 7.
+ * 2 ciclos entre las instrucciones 10 y 11.
+ * 1 ciclo después de la instrucción 11.
 Cantidad total de detenciones: 4 * 15 iteraciones = 60 detenciones. + 1 detención final por riesgo de control = 61 detenciones en total.
-(PREGUNTAR)
 
 Solucion con NOP desde main:
 1 main:	ADDI r2, r0, #0x1000

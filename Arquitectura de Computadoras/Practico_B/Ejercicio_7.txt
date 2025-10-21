@@ -29,6 +29,9 @@ b:			.space 72 												; reserva de 72 bytes para el arreglo [bi] (18*4=72)
 b) Riesgos de datos y de control:
 - Instrucción 5 (SW 0(r3), r5) depende de la instrucción 4 (LW r5, 0(r2)) -> 2 ciclo de detención.
 - Instrucción 9 (BNEZ r4, iterar) depende de la instrucción 8 (SUBI r4, r4, #1) -> 2 ciclos de detención.
+- Para solucionar los riesgos de datos y de control sin modificar el orden de las instrucciones, es necesario detener el cauce:
+ * 2 ciclos entre las instrucciones 4 y 5.
+ * 2 ciclos entre las instrucciones 8 y 9.
 - Cantidad total de detenciones: 4 * 18 iteraciones = 72 detenciones. + 1 detención final por riesgo de control = 73 detenciones en total.
 
 c) Código reordenado para reducir detenciones desde main:

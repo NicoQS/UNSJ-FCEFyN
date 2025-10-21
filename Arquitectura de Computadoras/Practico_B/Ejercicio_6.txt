@@ -29,6 +29,12 @@ b) Riesgos de datos y de control:
 - Instrucción 5 (ADD r6, r5, r3) depende de la instrucción 4 (LW r5, 0(r2)) -> 2 ciclo de detención.
 - Instrucción 6 (SW 0(r2), r6) depende de la instrucción 5 (ADD r6, r5, r3) -> 2 ciclo de detención.
 - Instrucción 9 (BNEZ r4, iterar) depende de la instrucción 8 (SUBI r4, r4, #1) -> 2 ciclos de detención.
+- Para solucionar los riesgos de datos y de control sin modificar el orden de las instrucciones, es necesario detener el cauce:
+ * 2 ciclos entre las instrucciones 4 y 5.
+ * 2 ciclos entre las instrucciones 5 y 6.
+ * 2 ciclos entre las instrucciones 8 y 9.
+ * 1 ciclo después de la instrucción 9.
+ 
 - Cantidad total de detenciones: 6 * 10 iteraciones = 60 detenciones. + 1 detenciones final por riesgo de control = 61 detenciones en total.
 c) Código reordenado para reducir detenciones desde main:
 
