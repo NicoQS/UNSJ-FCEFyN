@@ -99,7 +99,7 @@ goto :success
 :success
 echo.
 echo ========================================
-echo   COMPILACION EXITOSA DEL GAF!
+echo   COMPILACION EXITOSA DEL CAF!
 echo ========================================
 echo.
 echo Presiona cualquier tecla para continuar...

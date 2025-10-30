@@ -65,44 +65,6 @@ Este script realiza automaticamente:
 5. Compila el proyecto completo con csc.exe
 6. Genera el ejecutable en `out/AutomataCompiler.exe`
 
-### Metodo 2: Compilacion manual
-
-#### Paso 1: Generar el Scanner y Parser con Coco/R
-
-```powershell
-# Copiar la gramatica temporalmente
-copy grammar\Automata.atg .\Automata_temp.atg
-
-# Ejecutar Coco/R
-Coco.exe Automata_temp.atg
-
-# Mover archivos generados a src/
-move Scanner.cs src\
-move Parser.cs src\
-
-# Limpiar archivo temporal
-del Automata_temp.atg
-```
-
-#### Paso 2: Compilar el proyecto completo con .NET Framework
-
-```powershell
-csc /out:out\AutomataCompiler.exe Program.cs src\Scanner.cs src\Parser.cs src\AutomataBuilder.cs src\AutomataVisualizador.cs src\TablaSimbolos.cs
-```
-
-#### Opcion alternativa: Usando .NET Core/5+
-
-```powershell
-# Crear archivo de proyecto (si no existe)
-dotnet new console -n AutomataCompiler
-
-# Compilar
-dotnet build
-
-# Ejecutar
-dotnet run -- ejemplos\ejemplo1.aut
-```
-
 ### Ejecutar el compilador
 
 ```powershell
