@@ -8,12 +8,12 @@ Este proyecto implementa el algoritmo de Huffman Dinámico, que construye el ár
 
 ### Características
 
-- ✅ Compresión y descompresión de archivos de texto
-- ✅ Reconstrucción idéntica del archivo original (verificación byte a byte)
-- ✅ Algoritmo completo con actualización dinámica del árbol
-- ✅ Interfaz de línea de comandos amigable
-- ✅ Código bien estructurado, comentado y documentado
-- ✅ Sin dependencias externas (solo biblioteca estándar de Python)
+-  Compresión y descompresión de archivos de texto
+-  Reconstrucción idéntica del archivo original (verificación byte a byte)
+-  Algoritmo completo con actualización dinámica del árbol
+-  Interfaz de línea de comandos amigable
+-  Código bien estructurado, comentado y documentado
+-  Sin dependencias externas (solo biblioteca estándar de Python)
 
 ## Estructura del Proyecto
 
