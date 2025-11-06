@@ -250,7 +250,7 @@ El compilador genera un archivo HTML interactivo con:
 
 ## Contribuciones
 
-Este compilador fue disenado para ser educativo y facil de usar. Sientete libre de extenderlo con nuevas caracteristicas como:
+Este compilador fue disenado para ser educativo y facil de usar. Se puede extender con nuevas caracteristicas como:
 - Validacion de completitud del automata
 - Minimizacion de automatas
 - Conversion de AFND a AFD
