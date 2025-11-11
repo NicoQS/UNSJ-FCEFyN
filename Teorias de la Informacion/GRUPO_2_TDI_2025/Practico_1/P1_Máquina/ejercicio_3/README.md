@@ -169,27 +169,42 @@ ANÁLISIS DEPENDIENTE (pares consecutivos):
 
 ### Análisis de Texto
 ```
-archivo.txt:
-- Entropía independiente: 4.3870 bits/símbolo
-- Entropía dependiente: 7.2620 bits/símbolo
-- Eficiencia: 84.21% / 139.40%
-- Conclusión: Archivo pequeño con alta variabilidad de pares
+archivo.txt (574 bytes - 0.56 KB):
+- Símbolos únicos: 37
+- Entropía máxima: 5.2095 bits/símbolo
+- Entropía independiente: 4.3870 bits/símbolo (Eficiencia: 84.21%)
+- Redundancia independiente: 0.8224 bits/símbolo
+- Entropía dependiente: 7.2620 bits/símbolo (Eficiencia: 139.40%)
+- Redundancia dependiente: -2.0526 bits/símbolo
+- Tiempo de procesamiento: 0.0009 segundos
+- Conclusión: Texto con estructura predecible individualmente, pero alta 
+  variabilidad en pares consecutivos (archivo pequeño con muchas combinaciones únicas)
 ```
 
 ### Análisis de Ejecutables
 ```
-archivo.exe:
-- Entropía independiente: 4.3870 bits/símbolo
-- Entropía dependiente: 7.2620 bits/símbolo
-- Eficiencia: 84.21% / 139.40%
-- Conclusión: Mismos resultados que .txt (mismo contenido)
+archivo.exe (1024 bytes - 1.0 KB):
+- Símbolos únicos: 225
+- Entropía máxima: 7.8138 bits/símbolo
+- Entropía independiente: 5.4682 bits/símbolo (Eficiencia: 69.98%)
+- Redundancia independiente: 2.3456 bits/símbolo
+- Entropía dependiente: 6.7999 bits/símbolo (Eficiencia: 87.02%)
+- Redundancia dependiente: 1.0139 bits/símbolo
+- Tiempo de procesamiento: 0.0014 segundos
+- Conclusión: Alta diversidad de símbolos pero con estructura. Las dependencias
+  entre bytes mejoran la eficiencia, indicando patrones predecibles típicos de ejecutables
 ```
 
 ### Análisis de Archivos Comprimidos
 ```
-archivo.zip:
-- Entropía independiente: 6.9072 bits/símbolo
-- Entropía dependiente: 8.2439 bits/símbolo
-- Eficiencia: 90.19% / 107.65%
-- Conclusión: Mayor aleatoriedad, ya optimizado
+archivo.zip (521 bytes - 0.51 KB):
+- Símbolos únicos: 202
+- Entropía máxima: 7.6582 bits/símbolo
+- Entropía independiente: 6.9072 bits/símbolo (Eficiencia: 90.19%)
+- Redundancia independiente: 0.7510 bits/símbolo
+- Entropía dependiente: 8.2439 bits/símbolo (Eficiencia: 107.65%)
+- Redundancia dependiente: -0.5857 bits/símbolo
+- Tiempo de procesamiento: 0.0181 segundos
+- Conclusión: Alta aleatoriedad ya que está comprimido. Entropía muy cercana
+  al máximo teórico, indicando que el archivo ya está optimizado y es difícil de comprimir más
 ```
